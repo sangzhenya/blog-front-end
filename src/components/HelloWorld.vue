@@ -1,7 +1,7 @@
 <template>
   <div>
     <BlogHeader />
-    info
+    body
   </div>
 </template>
 
