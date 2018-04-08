@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Content from '@/components/Content'
 import Category from '@/components/Category'
 import About from '@/components/About'
+import AdminLogin from '@/components/admin/AdminLogin'
 
 Vue.use(Router)
 
@@ -22,6 +23,15 @@ export default new Router({
       path: '/about',
       name: 'about',
       component: About
+    },
+    {
+      path: '/admin/login',
+      name: 'adminLogin',
+      component: AdminLogin
+    },
+    {
+      path: '*',
+      redirect: '/'
     }
   ]
 })
