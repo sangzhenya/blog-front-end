@@ -4,7 +4,7 @@
     <div class="main-content">
       <div class="contents">
         <div class="content">
-          <div class="article-title">这是测试标题</div>
+          <router-link to='/article/0'><div class="article-title">这是测试标题</div></router-link>
           <div class="article-content">
             这是测试主要内容，这是测试主要内容，这是测试主要内容，这是测试主要内容，这是测试主要内容，这是测试主要内容，这是测试主要内容，这是测试主要内容，这是测试主要内容，
             这是测试主要内容，这是测试主要内容，这是测试主要内容，这是测试主要内容，这是测试主要内容，这是测试主要内容，这是测试主要内容，这是测试主要内容，这是测试主要内容，
@@ -12,14 +12,14 @@
           </div>
         </div>
         <div class="content">
-          <div class="article-title">这是测试标题</div>
+          <router-link to='/article/1'><div class="article-title">这是测试标题</div></router-link>
           <div class="article-content">
             这是测试主要内容，这是测试主要内容，这是测试主要内容，这是测试主要内容，这是测试主要内容，这是测试主要内容，这是测试主要内容，这是测试主要内容，这是测试主要内容，
             这是测试主要内容，这是测试主要内容，这是测试主要内容，这是测试主要内容，这是测试主要内容，这是测试主要内容，这是测试主要内容，这是测试主要内容，这是测试主要内容，
           </div>
         </div>
         <div class="content">
-          <div class="article-title">这是测试标题</div>
+          <router-link to='/article/2'><div class="article-title">这是测试标题</div></router-link>
           <div class="article-content">
             这是测试主要内容，这是测试主要内容，这是测试主要内容，这是测试主要内容，这是测试主要内容，这是测试主要内容，这是测试主要内容，这是测试主要内容，这是测试主要内容，
             这是测试主要内容，这是测试主要内容，这是测试主要内容，这是测试主要内容，这是测试主要内容，这是测试主要内容，这是测试主要内容，这是测试主要内容，这是测试主要内容，
@@ -29,7 +29,9 @@
       </div>
       <div class="pages">
         <ul class="page-ul">
-          <li class="page-active">1</li><li>2</li><li>3</li><li>4</li><li>5</li>
+          <li v-for="n in 10" v-bind:key="n" v-bind:class="{ 'page-active': n === page }">
+            <router-link :to="'/' + n"><div>{{ n }}</div></router-link>
+          </li>
         </ul>
       </div>
     </div>
@@ -46,7 +48,20 @@ export default {
   },
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      page: 1
+    }
+  },
+  methods: {
+    changePage () {
+      this.page = parseInt(this.$route.params.page);
+    }
+  },
+  watch: {
+    $route: 'changePage'
+  },
+  mounted () {
+    if (this.$route.params.page) {
+      this.page = parseInt(this.$route.params.page);
     }
   }
 }
@@ -54,6 +69,9 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+  a{
+    color: inherit;
+  }
   .main-content{
     margin-top: 30px;
     margin-left: 10%;
