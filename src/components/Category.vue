@@ -4,7 +4,7 @@
     <div class="category-content">
       <ul class="category-ul">
         <li v-for="category in categories" :key="category.name">
-          <div :class="category.style">{{category.name}}</div>
+          <router-link to='/category/0'><div :class="category.style">{{category.name}}</div></router-link>
         </li>
       </ul>
     </div>
@@ -39,6 +39,9 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+  a{
+    color: inherit;
+  }
   .category-content {
     margin-left: 10%;
     margin-top: 30px;

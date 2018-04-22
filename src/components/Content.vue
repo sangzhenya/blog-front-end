@@ -3,33 +3,24 @@
     <BlogHeader :pageType = '"index"' />
     <div class="main-content">
       <div class="contents">
-        <div class="content">
-          <router-link to='/article/0'><div class="article-title">这是测试标题</div></router-link>
-          <div class="article-content">
-            这是测试主要内容，这是测试主要内容，这是测试主要内容，这是测试主要内容，这是测试主要内容，这是测试主要内容，这是测试主要内容，这是测试主要内容，这是测试主要内容，
-            这是测试主要内容，这是测试主要内容，这是测试主要内容，这是测试主要内容，这是测试主要内容，这是测试主要内容，这是测试主要内容，这是测试主要内容，这是测试主要内容，
-            这是测试主要内容，这是测试主要内容，这是测试主要内容，这是测试主要内容，这是测试主要内容，这是测试主要内容，这是测试主要内容，这是测试主要内容，这是测试主要内容，
+        <div class="content" v-for="article in data.articles" v-bind:key="article.id">
+          <router-link :to="'/article/' + article.id"><div class="article-title">{{article.title}}</div></router-link>
+          <div class="article-attr">
+            <div>{{article.category.name}}</div>
+            <div>
+              <ul class="article-tag-ul">
+                <li v-for="tag in article.tags" v-bind:key="tag.id">{{tag.name}}</li>
+              </ul>
+            </div>
+            <div>{{article.createDate[0] + '-' + article.createDate[1] + '-' + article.createDate[2] +
+              ' ' + article.createDate[3] + ':' + article.createDate[4]}}</div>
           </div>
-        </div>
-        <div class="content">
-          <router-link to='/article/1'><div class="article-title">这是测试标题</div></router-link>
-          <div class="article-content">
-            这是测试主要内容，这是测试主要内容，这是测试主要内容，这是测试主要内容，这是测试主要内容，这是测试主要内容，这是测试主要内容，这是测试主要内容，这是测试主要内容，
-            这是测试主要内容，这是测试主要内容，这是测试主要内容，这是测试主要内容，这是测试主要内容，这是测试主要内容，这是测试主要内容，这是测试主要内容，这是测试主要内容，
-          </div>
-        </div>
-        <div class="content">
-          <router-link to='/article/2'><div class="article-title">这是测试标题</div></router-link>
-          <div class="article-content">
-            这是测试主要内容，这是测试主要内容，这是测试主要内容，这是测试主要内容，这是测试主要内容，这是测试主要内容，这是测试主要内容，这是测试主要内容，这是测试主要内容，
-            这是测试主要内容，这是测试主要内容，这是测试主要内容，这是测试主要内容，这是测试主要内容，这是测试主要内容，这是测试主要内容，这是测试主要内容，这是测试主要内容，
-            这是测试主要内容，这是测试主要内容，这是测试主要内容，这是测试主要内容，这是测试主要内容，这是测试主要内容，这是测试主要内容，这是测试主要内容，这是测试主要内容，
-          </div>
+          <div class="article-content">{{article.summary}}</div>
         </div>
       </div>
       <div class="pages">
         <ul class="page-ul">
-          <li v-for="n in 10" v-bind:key="n" v-bind:class="{ 'page-active': n === page }">
+          <li v-for="n in data.page.totalPage" v-bind:key="n" v-bind:class="{ 'page-active': n === page }">
             <router-link :to="'/' + n"><div>{{ n }}</div></router-link>
           </li>
         </ul>
@@ -40,6 +31,7 @@
 
 <script>
 import BlogHeader from '@/components/BlogHeader'
+import axios from 'axios'
 
 export default {
   name: 'Content',
@@ -48,21 +40,37 @@ export default {
   },
   data () {
     return {
-      page: 1
+      page: 1,
+      data: {
+        page: 1
+      }
     }
   },
   methods: {
     changePage () {
-      this.page = parseInt(this.$route.params.page);
+      if (this.$route.params.page) {
+        this.page = parseInt(this.$route.params.page);
+      }
+      let that = this;
+      axios({
+        url: 'http://localhost:8080/public/page',
+        method: 'post',
+        data: {
+          'page': that.page
+        }
+      }).then(function (response) {
+        that.data = response.data.data;
+        console.log(that.data)
+      }).catch(function (error) {
+        console.log(error)
+      });
     }
   },
   watch: {
     $route: 'changePage'
   },
   mounted () {
-    if (this.$route.params.page) {
-      this.page = parseInt(this.$route.params.page);
-    }
+    this.changePage();
   }
 }
 </script>
@@ -73,6 +81,7 @@ export default {
     color: inherit;
   }
   .main-content{
+    font-size: 16px;
     margin-top: 30px;
     margin-left: 10%;
     padding-left: 30px;
@@ -87,6 +96,7 @@ export default {
   }
   .pages{
     margin-top: 50px;
+    margin-bottom: 50px;
   }
   .page-ul{
     display: inline-block;
@@ -109,5 +119,23 @@ export default {
   .page-ul li.page-active {
     border-top: 1px solid #666666;
     background-color: #eaeaea;
+  }
+  .article-attr {
+    margin-top: 5px;
+  }
+  .article-attr div{
+    font-size: 12px;
+    display: inline-block;
+  }
+  .article-tag-ul{
+    margin-left: 15px;
+    margin-right: 15px;
+  }
+  .article-tag-ul li {
+    list-style: none;
+    display: inline-block;
+  }
+  .article-tag-ul li:not(:last-child):after {
+    content: ', ';
   }
 </style>
