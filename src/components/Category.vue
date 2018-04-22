@@ -4,7 +4,7 @@
     <div class="category-content">
       <ul class="category-ul">
         <li v-for="category in categories" :key="category.name">
-          <router-link to='/category/0'><div :class="category.style">{{category.name}}</div></router-link>
+          <router-link :to="'/category/' + category.id"><div :class="category.style">{{category.name}}</div></router-link>
         </li>
       </ul>
     </div>
@@ -13,6 +13,7 @@
 
 <script>
 import BlogHeader from '@/components/BlogHeader'
+import axios from 'axios'
 
 export default {
   name: 'Category',
@@ -24,15 +25,27 @@ export default {
       categories: []
     }
   },
+  methods: {
+    changePage () {
+      let that = this;
+      axios({
+        url: 'http://localhost:8080/public/categories',
+        method: 'post'
+      }).then(function (response) {
+        response.data.data.categoryVOList.forEach(function (item) {
+          that.categories.push({
+            id: item.id,
+            name: item.name,
+            style: 'style' + Math.ceil(Math.random() * 5)
+          })
+        });
+      }).catch(function (error) {
+        console.log(error)
+      });
+    }
+  },
   mounted () {
-    let categories = ['前段', 'Java', '数据结构', '沉思集', '无聊'];
-    let that = this;
-    categories.forEach(function (item) {
-      that.categories.push({
-        name: item,
-        style: 'style' + Math.ceil(Math.random() * 5)
-      })
-    });
+    this.changePage();
   }
 }
 </script>

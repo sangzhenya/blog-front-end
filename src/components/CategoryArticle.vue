@@ -2,13 +2,11 @@
   <div>
     <BlogHeader :pageType = '"category"' />
     <div class="main-content">
-      <div class="category-title">测试分类 {{id}}</div>
+      <div class="category-title">{{data.name}}</div>
       <div>
         <ul class="article-ul">
-          <li><router-link to='/article/0'><div>这里是测试标题1</div><div>这里是测试标题1</div></router-link></li>
-          <li><router-link to='/article/0'><div>这里是测试标题1</div><div>这里是测试标题1</div></router-link></li>
-          <li><router-link to='/article/0'><div>这里是测试标题1</div><div>这里是测试标题1</div></router-link></li>
-          <li><router-link to='/article/0'><div>这里是测试标题1</div><div>这里是测试标题1</div></router-link></li>
+          <li v-for="article in data.articleList" v-bind:key="article.id"><router-link :to="'/article/' + article.id"><div>{{article.title}}</div><div>{{article.createDate[0] + '-' + article.createDate[1] + '-' + article.createDate[2] +
+            ' ' + article.createDate[3] + ':' + article.createDate[4]}}</div></router-link></li>
         </ul>
       </div>
     </div>
@@ -17,6 +15,7 @@
 
 <script>
 import BlogHeader from '@/components/BlogHeader'
+import axios from 'axios'
 
 export default {
   name: 'CategoryArticle',
@@ -25,11 +24,35 @@ export default {
   },
   data () {
     return {
-      id: 0
+      id: 0,
+      data: {}
     }
   },
+  methods: {
+    changePage () {
+      if (this.$route.params.id) {
+        this.id = parseInt(this.$route.params.id);
+      }
+      let that = this;
+      axios({
+        url: 'http://localhost:8080/public/category',
+        method: 'post',
+        data: {
+          'id': that.id
+        }
+      }).then(function (response) {
+        that.data = response.data.data;
+        console.log(that.data)
+      }).catch(function (error) {
+        console.log(error)
+      });
+    }
+  },
+  watch: {
+    $route: 'changePage'
+  },
   mounted () {
-    this.id = parseInt(this.$route.params.id);
+    this.changePage();
   }
 }
 </script>

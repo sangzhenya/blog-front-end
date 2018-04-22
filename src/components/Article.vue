@@ -1,58 +1,20 @@
 <template>
   <div>
     <div class="main-content">
-      <router-link to='/index'><div class="back-main">回首页</div></router-link>
-      <div class="title">这里是测试标题 {{id}}</div>
-      <div class="category">分类1</div>
+      <router-link to='/1'><div class="back-main">回首页</div></router-link>
+      <div class="title">{{data.title}}</div>
+      <div class="category">{{data.category.name}}</div>
       <div>
         <ul class="tg-ul">
-          <li>标签1</li>
-          <li>标签2</li>
-          <li>标签3</li>
-          <li>标签4</li>
+          <li v-for="tag in data.tags" v-bind:key="tag.id">标签1</li>
         </ul>
       </div>
       <div class="content">
-        <p>
-          c测试内容，测试内容，测试内容，测试内容测试。
-          c测试内容，测试内容，测试内容，测试内容测试。
-          c测试内容，测试内容，测试内容，测试内容测试。c测试内容，测试内容，测试内容，测试内容测试。
-          c测试内容，测试内容，测试内容，测试内容测试。
-          c测试内容，测试内容，测试内容，测试内容测试。c测试内容，测试内容，测试内容，测试内容测试。
-          c测试内容，测试内容，测试内容，测试内容测试。
-          c测试内容，测试内容，测试内容，测试内容测试。
-        </p>
-        <p>
-          c测试内容，测试内容，测试内容，测试内容测试。
-          c测试内容，测试内容，测试内容，测试内容测试。
-          c测试内容，测试内容，测试内容，测试内容测试。c测试内容，测试内容，测试内容，测试内容测试。
-          c测试内容，测试内容，测试内容，测试内容测试。
-          c测试内容，测试内容，测试内容，测试内容测试。c测试内容，测试内容，测试内容，测试内容测试。
-          c测试内容，测试内容，测试内容，测试内容测试。
-          c测试内容，测试内容，测试内容，测试内容测试。
-        </p>
-        <p>
-          c测试内容，测试内容，测试内容，测试内容测试。
-          c测试内容，测试内容，测试内容，测试内容测试。
-          c测试内容，测试内容，测试内容，测试内容测试。c测试内容，测试内容，测试内容，测试内容测试。
-          c测试内容，测试内容，测试内容，测试内容测试。
-          c测试内容，测试内容，测试内容，测试内容测试。c测试内容，测试内容，测试内容，测试内容测试。
-          c测试内容，测试内容，测试内容，测试内容测试。
-          c测试内容，测试内容，测试内容，测试内容测试。
-        </p>
-        <p>
-          c测试内容，测试内容，测试内容，测试内容测试。
-          c测试内容，测试内容，测试内容，测试内容测试。
-          c测试内容，测试内容，测试内容，测试内容测试。c测试内容，测试内容，测试内容，测试内容测试。
-          c测试内容，测试内容，测试内容，测试内容测试。
-          c测试内容，测试内容，测试内容，测试内容测试。c测试内容，测试内容，测试内容，测试内容测试。
-          c测试内容，测试内容，测试内容，测试内容测试。
-          c测试内容，测试内容，测试内容，测试内容测试。
-        </p>
+        {{data.content}}
       </div>
       <div class="pre-next-router">
-        <div class="pre-router">Pre</div>
-        <div class="next-router">Next</div>
+        <router-link :to="'/article/' + data.preArticle.id" v-if="data.preArticle != null"><div class="pre-router">上一篇： {{data.preArticle.title}}</div></router-link>
+        <router-link :to="'/article/' + data.nextArticle.id"  v-if="data.nextArticle != null"><div class="next-router">下一篇：{{data.nextArticle.title}}</div></router-link>
       </div>
     </div>
   </div>
@@ -60,6 +22,7 @@
 
 <script>
 import BlogHeader from '@/components/BlogHeader'
+import axios from 'axios'
 
 export default {
   name: 'Article',
@@ -68,11 +31,37 @@ export default {
   },
   data () {
     return {
-      id: 0
+      id: 0,
+      data: {
+        category: {}
+      }
     }
   },
+  methods: {
+    changePage () {
+      if (this.$route.params.id) {
+        this.id = parseInt(this.$route.params.id);
+      }
+      let that = this;
+      axios({
+        url: 'http://localhost:8080/public/article',
+        method: 'post',
+        data: {
+          'id': that.id
+        }
+      }).then(function (response) {
+        that.data = response.data.data;
+        console.log(that.data)
+      }).catch(function (error) {
+        console.log(error)
+      });
+    }
+  },
+  watch: {
+    $route: 'changePage'
+  },
   mounted () {
-    this.id = parseInt(this.$route.params.id);
+    this.changePage();
   }
 }
 </script>
