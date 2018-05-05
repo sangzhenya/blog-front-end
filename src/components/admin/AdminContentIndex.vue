@@ -1,23 +1,20 @@
 <template>
   <div>
-    <BlogHeader />
-    body
+    <div>
+      This is the index page!
+    </div>
   </div>
 </template>
 
 <script>
-import BlogHeader from '@/components/BlogHeader'
-
 export default {
-  name: 'HelloWorld',
-  components: {
-    BlogHeader
-  },
+  name: 'AdminContentIndex',
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      msg: ''
     }
-  }
+  },
+  methods: {}
 }
 </script>
 

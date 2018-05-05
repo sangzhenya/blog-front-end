@@ -99,6 +99,7 @@ export default {
   }
   .pre-next-router {
     margin-top: 50px;
+    margin-bottom: 50px;
   }
   .pre-next-router div{
     display: inline-block;

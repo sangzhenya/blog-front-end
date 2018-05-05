@@ -6,6 +6,10 @@ import About from '@/components/About'
 import Article from '@/components/Article'
 import CategoryArticle from '@/components/CategoryArticle'
 import AdminLogin from '@/components/admin/AdminLogin'
+import AdminContent from '@/components/admin/AdminContent'
+import AdminContentIndex from '@/components/admin/AdminContentIndex'
+import AdminContentMessage from '@/components/admin/AdminContentMessage'
+import AdminContentOther from '@/components/admin/AdminContentOther'
 
 Vue.use(Router)
 
@@ -45,6 +49,27 @@ export default new Router({
       path: '/admin/login',
       name: 'adminLogin',
       component: AdminLogin
+    },
+    {
+      path: '/admin',
+      component: AdminContent,
+      children: [
+        {
+          path: '',
+          name: 'adminContentIndex',
+          component: AdminContentIndex
+        },
+        {
+          path: 'message',
+          name: 'adminContentMessage',
+          component: AdminContentMessage
+        },
+        {
+          path: 'other',
+          name: 'adminContentOther',
+          component: AdminContentOther
+        }
+      ]
     },
     {
       path: '*',
