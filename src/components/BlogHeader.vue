@@ -1,7 +1,7 @@
 <template>
   <div class="header">
     <div>
-      <div class="header-title"><router-link to="/1">半庭新月</router-link></div>
+      <div class="header-title"><router-link to="/1">半庭新月 Test</router-link></div>
       <ul class="header-menu">
         <router-link to="/1"><li :class="{active: isIndexActive}">首页</li></router-link><router-link
                      to="/category"><li :class="{active: isCategoryActive}">分类</li></router-link><router-link
