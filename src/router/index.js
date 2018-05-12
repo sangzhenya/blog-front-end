@@ -1,79 +1,65 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Content from '@/components/Content'
-import Category from '@/components/Category'
-import About from '@/components/About'
-import Article from '@/components/Article'
-import CategoryArticle from '@/components/CategoryArticle'
-import AdminLogin from '@/components/admin/AdminLogin'
-import AdminContent from '@/components/admin/AdminContent'
-import AdminContentIndex from '@/components/admin/AdminContentIndex'
-import AdminContentMessage from '@/components/admin/AdminContentMessage'
-import AdminContentOther from '@/components/admin/AdminContentOther'
+import Util from '../libs/util';
+import Cookies from 'js-cookie';
+
+import store from '@/vuex/store'
+
+import {routers, mainRouter, appRouter, otherRouter} from './router';
 
 Vue.use(Router)
 
-export default new Router({
-  routes: [
-    {
-      path: '/',
-      name: 'content',
-      component: Content
-    },
-    {
-      path: '/:page(\\d+)',
-      name: 'contentPage',
-      component: Content
-    },
-    {
-      path: '/category',
-      name: 'category',
-      component: Category
-    },
-    {
-      path: '/category/:id(\\d+)',
-      name: 'categoryPage',
-      component: CategoryArticle
-    },
-    {
-      path: '/about',
-      name: 'about',
-      component: About
-    },
-    {
-      path: '/article/:id(\\d+)',
-      name: 'article',
-      component: Article
-    },
-    {
-      path: '/admin/login',
-      name: 'adminLogin',
-      component: AdminLogin
-    },
-    {
-      path: '/admin',
-      component: AdminContent,
-      children: [
-        {
-          path: '',
-          name: 'adminContentIndex',
-          component: AdminContentIndex
-        },
-        {
-          path: 'message',
-          name: 'adminContentMessage',
-          component: AdminContentMessage
-        },
-        {
-          path: 'other',
-          name: 'adminContentOther',
-          component: AdminContentOther
+const RouterConfig = {
+  routes: routers
+};
+
+export const router = new Router(RouterConfig);
+
+router.beforeEach((to, from, next) => {
+  console.log(store.state.count);
+  Util.title(to.meta.title);
+  let curRouterObj = Util.getRouterObjByName([mainRouter], to.name);
+  if (curRouterObj != null) {
+    Util.toDefaultPage([...routers], to.name, router, next);
+  } else {
+    if (Cookies.get('locking') === '1' && to.name !== 'locking') { // 判断当前是否是锁定状态
+      next({
+        replace: true,
+        name: 'locking'
+      });
+    } else if (Cookies.get('locking') === '0' && to.name === 'locking') {
+      next(false);
+    } else {
+      if (!Cookies.get('user') && to.name !== 'login') { // 判断是否已经登录且前往的页面不是登录页
+        next({
+          name: 'login'
+        });
+      } else if (Cookies.get('user') && to.name === 'login') { // 判断是否已经登录且前往的是登录页
+        Util.title();
+        next({
+          name: 'home_index'
+        });
+      } else {
+        curRouterObj = Util.getRouterObjByName([otherRouter, ...appRouter], to.name);
+        if (curRouterObj && curRouterObj.access !== undefined) { // 需要判断权限的路由
+          if (curRouterObj.access === parseInt(Cookies.get('access'))) {
+            Util.toDefaultPage([otherRouter, ...appRouter], to.name, router, next); // 如果在地址栏输入的是一级菜单则默认打开其第一个二级菜单的页面
+          } else {
+            next({
+              replace: true,
+              name: 'error-403'
+            });
+          }
+        } else { // 没有配置权限的路由, 直接通过
+          Util.toDefaultPage([...routers], to.name, router, next);
         }
-      ]
-    },
-    {
-      path: '*',
-      redirect: '/'
+      }
     }
-  ]
-})
+  }
+});
+
+router.afterEach((to) => {
+  window.scrollTo(0, 0);
+});
+
+export default router;

@@ -11,21 +11,39 @@
       </div>
       <input type="button" value="Login" @click="login"/>
     </div>
+    <div>
+      <h2>{{msg}}</h2>
+      <hr />
+      <h4>{{$store.state.count}} - {{count}}</h4>
+      <hr/>
+      <p>
+        <button @click="$store.commit('add', 10)">Add</button>
+        <button @click="reduce">Min</button>
+      </p>
+    </div>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
+import store from '@/vuex/store'
+import {mapState, mapMutations} from 'vuex'
 
 export default {
   name: 'AdminLogin',
   data () {
     return {
-      userName: '',
-      password: ''
+      userName: 'admin',
+      password: 'admin',
+      msg: 'hello vuex'
     }
   },
+  computed: {
+    ...mapState(['count'])
+  },
+  store,
   methods: {
+    ...mapMutations(['reduce']),
     login () {
       let that = this;
       axios({
@@ -36,7 +54,7 @@ export default {
           'password': that.password
         }
       }).then(function (response) {
-        alert(response.data.status)
+        alert(response.data.message)
       }).catch(function (error) {
         console.log(error)
       });

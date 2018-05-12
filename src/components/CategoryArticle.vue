@@ -35,7 +35,7 @@ export default {
       }
       let that = this;
       axios({
-        url: 'http://localhost:8080/public/category',
+        url: 'https://web.sangzhenya.com/public/category',
         method: 'post',
         data: {
           'id': that.id

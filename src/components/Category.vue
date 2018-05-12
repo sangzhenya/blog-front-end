@@ -29,7 +29,7 @@ export default {
     changePage () {
       let that = this;
       axios({
-        url: 'http://localhost:8080/public/categories',
+        url: 'https://web.sangzhenya.com/public/categories',
         method: 'post'
       }).then(function (response) {
         response.data.data.categoryVOList.forEach(function (item) {

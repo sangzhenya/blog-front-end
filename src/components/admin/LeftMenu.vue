@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="menu-header">
-      Lin Xinyue
+      <router-link to="/admin/"><div>Lin Xinyue</div></router-link>
     </div>
     <div>
       <ul class="menu-ul">

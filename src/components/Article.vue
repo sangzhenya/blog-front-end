@@ -44,7 +44,7 @@ export default {
       }
       let that = this;
       axios({
-        url: 'http://localhost:8080/public/article',
+        url: 'https://web.sangzhenya.com/public/article',
         method: 'post',
         data: {
           'id': that.id

@@ -53,7 +53,7 @@ export default {
       }
       let that = this;
       axios({
-        url: 'http://localhost:8080/public/page',
+        url: 'https://web.sangzhenya.com/public/page',
         method: 'post',
         data: {
           'page': that.page
