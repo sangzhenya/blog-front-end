@@ -3,17 +3,17 @@ pipeline {
   stages {
     stage('NPM Install') {
       steps {
-        sh 'sh \'npm install\''
+        sh 'npm install'
       }
     }
     stage('Build') {
       steps {
-        sh 'sh \'node build/build.js\''
+        sh 'node build/build.js'
       }
     }
-    stage('Test') {
+    stage('Done') {
       steps {
-        sh 'sh \'echo Test\''
+        echo 'Done...'
       }
     }
   }
