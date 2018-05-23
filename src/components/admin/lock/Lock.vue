@@ -1,20 +1,16 @@
 <template>
-  <div>
-    <div>
-      This is the index page!
-    </div>
-  </div>
+  <div>Locking</div>
 </template>
 
 <script>
+
 export default {
-  name: 'AdminContentIndex',
+  name: 'AdminLock',
   data () {
     return {
-      msg: ''
+      msg: 'hello vuex'
     }
-  },
-  methods: {}
+  }
 }
 </script>
 

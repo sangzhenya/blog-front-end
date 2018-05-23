@@ -4,6 +4,9 @@
       <div class="left-menu">
         <LeftMenu :indexType = 'indexType'/>
       </div>
+      <div class="top-bar">
+        <TopBar />
+      </div>
       <div class="right-content">
         <router-view></router-view>
       </div>
@@ -12,34 +15,35 @@
 </template>
 
 <script>
-import LeftMenu from '@/components/admin/LeftMenu'
+import LeftMenu from '@/components/admin/bar/LeftMenu'
+import TopBar from '@/components/admin/bar/TopBar'
 
 export default {
   name: 'AdminContent',
   components: {
-    LeftMenu
+    LeftMenu, TopBar
   },
   data () {
     return {
       msg: '',
-      indexType: 'index'
+      indexType: 'index',
+      routerMap: {
+        'adminIndex': 'index',
+        'adminMessage': 'message',
+        'adminOther': 'other'
+      }
     }
   },
   methods: {
     paramsChange () {
-      let routerName = this.$route.name;
-      if (routerName === 'adminContentIndex') {
-        this.indexType = 'index'
-      } else if (routerName === 'adminContentMessage') {
-        this.indexType = 'message'
-      } else if (routerName === 'adminContentOther') {
-        this.indexType = 'other'
-      }
-      console.log(this.$route.params);
+      this.indexType = this.routerMap[this.$route.name];
     }
   },
   watch: {
     $route: 'paramsChange'
+  },
+  mounted () {
+    this.indexType = this.routerMap[this.$route.name];
   }
 }
 </script>
@@ -57,11 +61,17 @@ export default {
     width: 200px;
     background-color: #333;
   }
+  .top-bar{
+    position: fixed;
+    left: 200px;
+    right: 0;
+    height: 40px;
+  }
   .right-content{
     overflow-y: auto;
     position: fixed;
     left: 200px;
-    top: 0;
+    top: 40px;
     width: 100%;
     bottom: 0;
     background-color: aliceblue;

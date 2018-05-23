@@ -1,27 +1,19 @@
 <template>
-  <div>
-    <div class="test">
-      tiouiui
-    </div>
-  </div>
+  <div>404</div>
 </template>
 
 <script>
+
 export default {
-  name: 'AdminContentOther',
+  name: 'E403',
   data () {
     return {
-      msg: ''
+      msg: 'hello vuex'
     }
-  },
-  methods: {}
+  }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.test{
-  font-size: 28px;
-  color: green;
-}
 </style>

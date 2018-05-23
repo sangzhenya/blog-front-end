@@ -7,7 +7,7 @@ export const loginRouter = {
   meta: {
     title: 'Login - Login'
   },
-  component: () => import('@/components/admin/AdminLogin')
+  component: () => import('@/components/admin/lock/Login')
 };
 
 export const page404 = {
@@ -16,7 +16,7 @@ export const page404 = {
   meta: {
     title: '404 - 404'
   },
-  component: () => import('@/components/Content')
+  component: () => import('@/components/error/E404')
 };
 
 export const page403 = {
@@ -25,7 +25,7 @@ export const page403 = {
   meta: {
     title: '403 - 403'
   },
-  component: () => import('@/components/Content')
+  component: () => import('@/components/error/E403')
 };
 
 export const page500 = {
@@ -34,7 +34,7 @@ export const page500 = {
   meta: {
     title: '500 - 500'
   },
-  component: () => import('@/components/Content')
+  component: () => import('@/components/error/E500')
 };
 
 export const preview = {
@@ -46,7 +46,7 @@ export const preview = {
 export const locking = {
   path: '/locking',
   name: 'locking',
-  component: () => import('@/components/Content')
+  component: () => import('@/components/admin/lock/Lock')
 };
 
 export const mainRouter = {
@@ -99,11 +99,11 @@ export const otherRouter = {
   redirect: '/other/home',
   component: AdminContent,
   children: [
-    { path: 'home', title: {i18n: 'home'}, name: 'home_index', component: () => import('@/components/admin/AdminContentIndex') },
-    { path: 'ownspace', title: '个人中心', name: 'ownspace_index', component: () => import('@/components/admin/AdminContentIndex') },
-    { path: 'order/:order_id', title: '订单详情', name: 'order-info', component: () => import('@/components/admin/AdminContentIndex') }, // 用于展示动态路由
-    { path: 'shopping', title: '购物详情', name: 'shopping', component: () => import('@/components/admin/AdminContentIndex') }, // 用于展示带参路由
-    { path: 'message', title: '消息中心', name: 'message_index', component: () => import('@/components/admin/AdminContentIndex') }
+    { path: 'home', title: {i18n: 'home'}, name: 'home_index', component: () => import('@/components/admin/AdminIndex') },
+    { path: 'ownspace', title: '个人中心', name: 'ownspace_index', component: () => import('@/components/admin/AdminIndex') },
+    { path: 'order/:order_id', title: '订单详情', name: 'order-info', component: () => import('@/components/admin/AdminIndex') }, // 用于展示动态路由
+    { path: 'shopping', title: '购物详情', name: 'shopping', component: () => import('@/components/admin/AdminIndex') }, // 用于展示带参路由
+    { path: 'message', title: '消息中心', name: 'message_index', component: () => import('@/components/admin/AdminIndex') }
   ]
 };
 
@@ -116,35 +116,43 @@ export const appRouter = [
     access: 0,
     component: AdminContent,
     children: [
-      { path: 'index', title: '权限测试页', name: 'accesstest_index', access: 0, component: () => import('@/components/admin/AdminContentIndex') }
+      { path: 'index', title: '权限测试页', name: 'accesstest_index', access: 0, component: () => import('@/components/admin/AdminIndex') }
     ]
   },
   {
     path: '/admin',
     icon: 'social-buffer',
+    redirect: '/admin/index',
     title: '组件',
     component: AdminContent,
     children: [
       {
-        path: '',
+        path: 'index',
         icon: 'compose',
-        name: 'index',
+        name: 'adminIndex',
         title: 'Index',
-        component: () => import('@/components/admin/AdminContentIndex')
+        component: () => import('@/components/admin/AdminIndex')
       },
       {
-        path: '',
+        path: 'message',
         icon: 'message',
-        name: 'adminContentMessage',
+        name: 'adminMessage',
         title: 'AdminContentMessage',
-        component: () => import('@/components/admin/AdminContentMessage')
+        component: () => import('@/components/admin/AdminMessage')
       },
       {
-        path: '',
+        path: 'message/edit/:id(\\d+)',
+        icon: 'message',
+        name: 'adminMessageEdit',
+        title: 'AdminContentMessageEdit',
+        component: () => import('@/components/admin/AdminMessageEdit')
+      },
+      {
+        path: 'other',
         icon: 'other',
-        name: 'adminContentOther',
+        name: 'adminOther',
         title: 'AdminContentOther',
-        component: () => import('@/components/admin/AdminContentOther')
+        component: () => import('@/components/admin/AdminOther')
       }
     ]
   }

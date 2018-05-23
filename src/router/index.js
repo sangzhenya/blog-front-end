@@ -37,7 +37,7 @@ router.beforeEach((to, from, next) => {
       } else if (Cookies.get('user') && to.name === 'login') { // 判断是否已经登录且前往的是登录页
         Util.title();
         next({
-          name: 'home_index'
+          name: 'adminIndex'
         });
       } else {
         curRouterObj = Util.getRouterObjByName([otherRouter, ...appRouter], to.name);
