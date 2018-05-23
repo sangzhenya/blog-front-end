@@ -1,21 +1,16 @@
 <template>
   <div class="page-main">
-    <!--<div>
-      <label for="userName">User Name: </label>
-      <input type="text" id="userName" v-model="userName"/>
-    </div>
-    <div>
-      <label for="password">Password: </label>
-      <input type="password" id="password" v-model="password"/>
-    </div>
-    <input type="button" value="Login" @click="login"/>
-    <i-input>1231</i-input>-->
+    <!--<div class="login-background">
+      <img class="login-background-img" src="../../../assets/img/background/background_1.jpg" />
+    </div>-->
     <div class="login-main">
-      <div class="login-header">Login</div>
-      <div><i-input type="text"  v-model="userName"></i-input></div>
-      <div><i-input type="password" v-model="password" @on-enter="login"></i-input></div>
-      <div>
-        <i-button type="primary" @click="login">登录</i-button>
+      <div class="login-header">Login In</div>
+      <div class="login-form">
+        <div><i-input type="text"  v-model="userName"></i-input></div>
+        <div><i-input type="password" v-model="password" @on-enter="login"></i-input></div>
+        <div class="submit-field">
+          <i-button type="primary" long @click="login">登录</i-button>
+        </div>
       </div>
     </div>
   </div>
@@ -59,21 +54,55 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style>
   .page-main {
+    background: url("../../../assets/img/background/background_1.jpg") 0 / cover fixed;
     position: fixed;
     top: 0;
     right: 0;
     bottom: 0;
     left: 0;
-    background-color: #cccccc;
   }
   .login-main{
+    position: relative;
+    background: hsla(0, 0%, 100%, .3);
+    border-radius: 5px;
     margin-top: 15%;
     width: 400px;
-    height: 300px;
-    background-color: red;
+    height: 250px;
     margin-left: auto;
     margin-right: auto;
+    overflow: hidden;
+  }
+  .login-main:before {
+    background: url("../../../assets/img/background/background_1.jpg") 0 / cover fixed;
+    content: '';
+    z-index: -1;
+    filter: blur(10px);
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: -30px;
+  }
+  .login-header{
+    margin-top: 15px;
+    text-align: center;
+    font-size: 26px;
+    color: #fff;
+    line-height: 1.5;
+  }
+  .login-form{
+    margin-top: 20px;
+    margin-left: 15%;
+    margin-right: 15%;
+  }
+  .login-form div{
+    margin-bottom: 10px;
+  }
+  .login-form input{
+    color: #333333;
+    background-color: #eaeaea99;
   }
 </style>
