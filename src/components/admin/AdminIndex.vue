@@ -3,7 +3,7 @@
     <div>
       This is the index page!
     </div>
-    <!--<Upload  action="http://localhost:8080/upload" name="test">
+    <Upload  action="http://localhost:8080/upload" name="test">
       <Button type="ghost"  icon="ios-cloud-upload-outline">Upload file</Button>
     </Upload>
     <a href="http://localhost:8080/download">下载test</a>
@@ -11,20 +11,15 @@
 
     <Upload multiple action="http://localhost:8080/batch/upload" name="file">
       <Button type="ghost"  icon="ios-cloud-upload-outline">Upload files</Button>
-    </Upload>-->
+    </Upload>
   </div>
 </template>
 
 <script>
-import Upload from 'iview/src/components/Upload'
-import Button from 'iview/src/components/Button'
 import '../../assets/style/simplemde.min.css';
 
 export default {
   name: 'AdminIndex',
-  components: {
-    Upload, Button
-  },
   data () {
     return {
       msg: ''
