@@ -56,7 +56,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
   .page-main {
-    background: url("../../../assets/img/background/background_1.jpg") 0 / cover fixed;
+    background: url("https://i.loli.net/2018/07/17/5b4dd6e37cd40.jpg") 0 / cover fixed;
     position: fixed;
     top: 0;
     right: 0;
@@ -75,7 +75,7 @@ export default {
     overflow: hidden;
   }
   .login-main:before {
-    background: url("../../../assets/img/background/background_1.jpg") 0 / cover fixed;
+    background: url("https://i.loli.net/2018/07/17/5b4dd6e37cd40.jpg") 0 / cover fixed;
     content: '';
     z-index: -1;
     filter: blur(10px);
