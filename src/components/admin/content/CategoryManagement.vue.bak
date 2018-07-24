@@ -1,0 +1,76 @@
+<template>
+  <div>
+    <Row class="line">
+      <Col span="3">
+        <div class="title">分类管理</div>
+      </Col>
+    </Row>
+    <Row class="line">
+      <Col span="12">
+        <Tag closable class="category">标签一标签一标签一标签一标签一标签一标签一</Tag>
+        <Tag closable class="category">标签二标签二标签二</Tag>
+        <Tag closable class="category">标签三</Tag>
+        <Tag closable class="category">标签四标签四</Tag>
+      </Col>
+    </Row>
+    <Row class="line">
+      <Col span="2">
+        <Input placeholder="Enter something..." style="width: 300px;" icon="pricetag"></Input>
+      </Col>
+    </Row>
+
+    <Row class="tag-line-title line">
+      <Col span="3">
+        <div class="title">标签管理</div>
+      </Col>
+    </Row>
+    <Row class="line">
+      <Col span="12">
+        <Tag type="border" closable color="blue">标签一</Tag>
+        <Tag type="border" closable color="green">标签二</Tag>
+        <Tag type="border" closable color="red">标签三</Tag>
+        <Tag type="border" closable color="yellow">标签四</Tag>
+      </Col>
+    </Row>
+    <Row class="line">
+      <Col span="2">
+        <Input placeholder="Enter something..." style="width: 300px;" icon="pricetag"></Input>
+      </Col>
+    </Row>
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'CategoryManagement',
+  data () {
+    return {
+      msg: ''
+    }
+  },
+  methods: {
+  },
+  mounted () {
+  }
+}
+</script>
+
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style scoped>
+  .line{
+    margin-left: 20px;
+    margin-top: 20px;
+  }
+  .tag-line-title{
+    margin-top: 50px;
+  }
+  .title{
+    font-size: 20px;
+    line-height: 36px;
+  }
+  .category{
+    font-size: 16px;
+    line-height: 35px;
+    height: 35px;
+  }
+</style>

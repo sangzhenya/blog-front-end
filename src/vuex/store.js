@@ -5,7 +5,8 @@ Vue.use(Vuex);
 
 const state = {
   count: 1,
-  content: 'hello vuex store'
+  content: 'hello vuex store',
+  user: 'info'
 };
 
 const mutations = {

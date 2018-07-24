@@ -74,6 +74,6 @@ export default {
     top: 40px;
     width: 100%;
     bottom: 0;
-    background-color: aliceblue;
+    background-color: #F0F0F0;
   }
 </style>

@@ -1,48 +1,32 @@
 <template>
   <div>
     <div class="menu-header">
-      <router-link to="/admin/"><div>Lin Xinyue</div></router-link>
+      <router-link to="/admin/"><div>控制中心</div></router-link>
     </div>
     <div>
-      <!--<ul class="menu-ul">
-        <li :class="{active: indexType === 'index'}"><router-link to="/admin/"><div>Index</div></router-link></li>
-        <li :class="{active: indexType === 'message'}"><router-link to="/admin/message"><div>Message</div></router-link></li>
-        <li :class="{active: indexType === 'other'}"><router-link to="/admin/other"><div>Other</div></router-link></li>
-      </ul>-->
-      <Menu theme="dark">
-        <Submenu name="1">
-          <template slot="title">
-            <Icon type="ios-paper"></Icon>
-            内容管理
-          </template>
-          <MenuItem name="1-1">文章管理</MenuItem>
-          <MenuItem name="1-2">评论管理</MenuItem>
-          <MenuItem name="1-3">举报管理</MenuItem>
-        </Submenu>
-        <Submenu name="2">
-          <template slot="title">
-            <Icon type="ios-people"></Icon>
-            用户管理
-          </template>
-          <MenuItem name="2-1">新增用户</MenuItem>
-          <MenuItem name="2-2">活跃用户</MenuItem>
-        </Submenu>
-        <Submenu name="3">
-          <template slot="title">
-            <Icon type="stats-bars"></Icon>
-            统计分析
-          </template>
-          <MenuGroup title="使用">
-            <MenuItem name="3-1">新增和启动</MenuItem>
-            <MenuItem name="3-2">活跃分析</MenuItem>
-            <MenuItem name="3-3">时段分析</MenuItem>
+      <template>
+        <Menu theme="dark" :active-name="$route.name" @on-select="handleChange">
+          <MenuItem name="adminIndex">
+            首页
+          </MenuItem>
+          <MenuGroup title="内容管理">
+            <MenuItem name="articleManage">
+              <Icon type="document-text"></Icon>
+              文章管理
+            </MenuItem>
+            <MenuItem name="categoryManage">
+              <Icon type="edit"></Icon>
+              分类标签管理
+            </MenuItem>
           </MenuGroup>
-          <MenuGroup title="留存">
-            <MenuItem name="3-4">用户留存</MenuItem>
-            <MenuItem name="3-5">流失用户</MenuItem>
+          <MenuGroup title="小工具">
+            <MenuItem name="messageTool">
+              <Icon type="email"></Icon>
+              信息中心
+            </MenuItem>
           </MenuGroup>
-        </Submenu>
-      </Menu>
+        </Menu>
+      </template>
     </div>
   </div>
 </template>
@@ -56,7 +40,14 @@ export default {
       msg: ''
     }
   },
-  methods: {}
+  methods: {
+    handleChange (name) {
+      this.$router.push({
+        name: name
+      });
+      // this.$emit('on-change', name);
+    }
+  }
 }
 </script>
 
@@ -70,26 +61,7 @@ export default {
     text-align: center;
     margin-top: 30px;
     margin-bottom: 20px;
-    margin-left: 30px;
     color: #ccc;
     font-size: 24px;
-    /*border-bottom: 1px solid #eaeaea;*/
-  }
-  .menu-ul{
-  }
-  .menu-ul li{
-    padding-left: 50px;
-    font-size: 16px;
-    line-height: 3;
-    color: #afafaf;
-    list-style: none;
-  }
-  .menu-ul li:hover{
-    color: #efefef;
-    background-color: #1c2438;
-  }
-  .active{
-    color: #efefef;
-    background-color: #1c2438;
   }
 </style>

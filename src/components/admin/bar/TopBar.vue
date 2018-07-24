@@ -32,7 +32,7 @@ export default {
     color: inherit;
   }
   .top-bar{
-    background-color: #eaeaea;
+    background-color: #ffffff;
   }
   .user-info-part span{
     float: right;

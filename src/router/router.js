@@ -134,24 +134,38 @@ export const appRouter = [
         component: () => import('@/components/admin/AdminIndex')
       },
       {
-        path: 'message',
+        path: 'management/article',
+        icon: 'compose',
+        name: 'articleManage',
+        title: 'Article Manage',
+        component: () => import('@/components/admin/content/ArticleManagement')
+      },
+      {
+        path: 'management/category',
+        icon: 'compose',
+        name: 'categoryManage',
+        title: 'Category Manage',
+        component: () => import('@/components/admin/content/CategoryManagement')
+      },
+      {
+        path: 'tool/message',
         icon: 'message',
-        name: 'adminMessage',
-        title: 'AdminContentMessage',
-        component: () => import('@/components/admin/AdminMessage')
+        name: 'messageTool',
+        title: 'Message Tool',
+        component: () => import('@/components/admin/tool/MessageTool')
       },
       {
         path: 'message/edit/:id(\\d+)',
         icon: 'message',
         name: 'adminMessageEdit',
-        title: 'AdminContentMessageEdit',
+        title: 'Admin ContentMessageEdit',
         component: () => import('@/components/admin/AdminMessageEdit')
       },
       {
         path: 'other',
         icon: 'other',
         name: 'adminOther',
-        title: 'AdminContentOther',
+        title: 'Admin ContentOther',
         component: () => import('@/components/admin/AdminOther')
       }
     ]

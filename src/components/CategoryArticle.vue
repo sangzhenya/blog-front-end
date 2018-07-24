@@ -16,6 +16,7 @@
 <script>
 import BlogHeader from '@/components/BlogHeader'
 import axios from 'axios'
+import CommonConfig from '@/config/common-config'
 
 export default {
   name: 'CategoryArticle',
@@ -35,7 +36,7 @@ export default {
       }
       let that = this;
       axios({
-        url: 'https://web.sangzhenya.com/public/category',
+        url: CommonConfig.webDomain + 'public/category',
         method: 'post',
         data: {
           'id': that.id

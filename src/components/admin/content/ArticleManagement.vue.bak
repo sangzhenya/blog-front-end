@@ -1,0 +1,99 @@
+<template>
+  <div>
+    <div>
+      <Row class="title-line line">
+        <Col span="1">
+          <div class="title">标题</div>
+        </Col>
+        <Col span="12">
+          <Input size="large" placeholder="large size"></Input>
+        </Col>
+      </Row>
+      <Row class="line">
+        <Col span="1">
+          <div class="title">分类</div>
+        </Col>
+        <Col span="12">
+          <AutoComplete
+            v-model="value3"
+            :data="data3"
+            :filter-method="filterMethod"
+            placeholder="input here">
+          </AutoComplete>
+        </Col>
+      </Row>
+      <Row class="line">
+        <Col span="1">
+          <div class="title">标签</div>
+        </Col>
+        <Col span="12">
+          <Tag type="border" closable color="yellow">标签四</Tag>
+          <Tag type="border" closable color="yellow">标签四</Tag>
+          <Tag type="border" closable color="blue">标签一</Tag>
+          <Tag type="border" closable color="yellow">标签四</Tag>
+          <Tag type="border" closable color="blue">标签一</Tag>
+          <Tag type="border" closable color="yellow">标签四</Tag>
+          <Tag type="border" closable color="green">标签二</Tag>
+          <Tag type="border" closable color="yellow">标签四</Tag>
+          <Tag type="border" closable color="green">标签二</Tag>
+          <Tag type="border" closable color="yellow">标签四</Tag>
+          <Tag type="border" closable color="red">标签三</Tag>
+          <Tag type="border" closable color="yellow">标签四</Tag>
+          <Tag type="border" closable color="yellow">标签四</Tag>
+          <Tag type="border" closable color="yellow">标签四</Tag>
+          <Tag type="border" closable color="yellow">标签四</Tag>
+          <Tag type="border" closable color="red">标签三</Tag>
+          <Tag type="border" closable color="yellow">标签四</Tag>
+          <Tag type="border" closable color="yellow">标签四</Tag>
+          <Tag type="border" closable color="green">标签二</Tag>
+          <Tag type="border" closable color="yellow">标签四</Tag>
+          <Tag type="border" closable color="yellow">标签四</Tag>
+          <Input placeholder="Enter something..." style="width: 180px;" icon="pricetag"></Input>
+        </Col>
+      </Row>
+      <Row class="line">
+        <Col span="1">
+          <div class="title">内容</div>
+        </Col>
+        <Col span="12">
+          <Input type="textarea" :autosize="{minRows: 10,maxRows: 50}" placeholder="Enter something..."></Input>
+        </Col>
+      </Row>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'ArticleManagement',
+  data () {
+    return {
+      msg: '',
+      value3: '',
+      data3: ['启示录', '启示录2', '梦想']
+    }
+  },
+  methods: {
+    filterMethod (value, option) {
+      return option.toUpperCase().indexOf(value.toUpperCase()) !== -1;
+    }
+  },
+  mounted () {
+  }
+}
+</script>
+
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style scoped>
+  .line {
+    margin-bottom: 10px;
+  }
+  .title-line{
+    margin-top: 20px;
+  }
+  .title{
+    font-size: 20px;
+    line-height: 36px;
+    margin-left: 20px;
+  }
+</style>

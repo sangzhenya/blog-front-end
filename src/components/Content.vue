@@ -32,6 +32,7 @@
 <script>
 import BlogHeader from '@/components/BlogHeader'
 import axios from 'axios'
+import CommonConfig from '@/config/common-config'
 
 export default {
   name: 'Content',
@@ -53,7 +54,7 @@ export default {
       }
       let that = this;
       axios({
-        url: 'https://web.sangzhenya.com/public/page',
+        url: CommonConfig.webDomain + 'public/page',
         method: 'post',
         data: {
           'page': that.page

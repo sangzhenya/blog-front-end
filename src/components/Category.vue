@@ -14,6 +14,7 @@
 <script>
 import BlogHeader from '@/components/BlogHeader'
 import axios from 'axios'
+import CommonConfig from '@/config/common-config'
 
 export default {
   name: 'Category',
@@ -29,7 +30,7 @@ export default {
     changePage () {
       let that = this;
       axios({
-        url: 'https://web.sangzhenya.com/public/categories',
+        url: CommonConfig.webDomain + 'public/categories',
         method: 'post'
       }).then(function (response) {
         response.data.data.categoryVOList.forEach(function (item) {

@@ -20,6 +20,7 @@
 import axios from 'axios'
 import store from '@/vuex/store'
 import Cookies from 'js-cookie';
+import CommonConfig from '@/config/common-config'
 
 export default {
   name: 'AdminLogin',
@@ -35,7 +36,7 @@ export default {
     login () {
       let that = this;
       axios({
-        url: 'http://localhost:8080/admin/login',
+        url: CommonConfig.webDomain + 'admin/login',
         method: 'post',
         data: {
           'username': that.userName,
