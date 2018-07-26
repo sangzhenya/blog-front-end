@@ -45,6 +45,8 @@ export default {
       }).then(function (response) {
         console.log(response.data);
         Cookies.set('user', that.userName);
+        that.$store.state.authorizeKey = response.data.result;
+        Cookies.set('authorizeKey', response.data.result);
         that.$router.push('/admin/index');
       }).catch(function (error) {
         console.log(error)

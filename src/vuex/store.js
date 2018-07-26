@@ -1,12 +1,14 @@
 import Vue from 'vue';
 import Vuex from 'vuex'
+import Cookies from 'js-cookie';
 
 Vue.use(Vuex);
 
 const state = {
   count: 1,
   content: 'hello vuex store',
-  user: 'info'
+  user: 'info',
+  authorizeKey: ''
 };
 
 const mutations = {
@@ -18,6 +20,15 @@ const mutations = {
   }
 };
 
+const getters = {
+  getAuthorizeKey (state) {
+    if (state.authorizeKey) {
+      return state.authorizeKey;
+    }
+    return Cookies.get('authorizeKey');
+  }
+};
+
 export default new Vuex.Store({
-  state, mutations
+  state, mutations, getters
 })

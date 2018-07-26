@@ -14,10 +14,10 @@
 
 <script>
 import SimpleMDE from 'simplemde';
-import '../../assets/style/simplemde.min.css';
+import '@/assets/style/simplemde.min.css';
 
 export default {
-  name: 'AdminMessage',
+  name: 'AdminMessageEdit',
   data () {
     return {
       msg: '',

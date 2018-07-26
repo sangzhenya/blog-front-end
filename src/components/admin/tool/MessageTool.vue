@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="message-main">
-      <div class="message-item" v-for="(item, index) in items" v-bind:key="index">
+      <div class="message-item" v-for="(item, index) in items" v-bind:key="index" v-on:dblclick="messageClick(index)">
         {{ item }}
       </div>
     </div>
@@ -36,6 +36,9 @@ export default {
     }
   },
   methods: {
+    messageClick (index) {
+      alert(index);
+    }
   }
 }
 </script>

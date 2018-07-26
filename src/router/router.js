@@ -159,7 +159,7 @@ export const appRouter = [
         icon: 'message',
         name: 'adminMessageEdit',
         title: 'Admin ContentMessageEdit',
-        component: () => import('@/components/admin/AdminMessageEdit')
+        component: () => import('@/components/admin/tool/AdminMessageEdit')
       },
       {
         path: 'other',

@@ -6,16 +6,11 @@
         <div class="content" v-for="article in data.articles" v-bind:key="article.id">
           <router-link :to="'/article/' + article.id"><div class="article-title">{{article.title}}</div></router-link>
           <div class="article-attr">
-            <div>{{article.category.name}}</div>
-            <div>
-              <ul class="article-tag-ul">
-                <li v-for="tag in article.tags" v-bind:key="tag.id">{{tag.name}}</li>
-              </ul>
-            </div>
-            <div>{{article.createDate[0] + '-' + article.createDate[1] + '-' + article.createDate[2] +
-              ' ' + article.createDate[3] + ':' + article.createDate[4]}}</div>
+            <div>{{ article.createDate | formatDate }}</div>
           </div>
-          <div class="article-content">{{article.summary}}</div>
+          <router-link :to="'/article/' + article.id">
+            <div class="article-content">{{article.summary}}</div>
+          </router-link>
         </div>
       </div>
       <div class="pages">
@@ -33,6 +28,7 @@
 import BlogHeader from '@/components/BlogHeader'
 import axios from 'axios'
 import CommonConfig from '@/config/common-config'
+import DateUtils from '@/libs/date-utils'
 
 export default {
   name: 'Content',
@@ -55,6 +51,9 @@ export default {
       let that = this;
       axios({
         url: CommonConfig.webDomain + 'public/page',
+        headers: {
+          Authorization: ''
+        },
         method: 'post',
         data: {
           'page': that.page
@@ -65,6 +64,11 @@ export default {
       }).catch(function (error) {
         console.log(error)
       });
+    }
+  },
+  filters: {
+    formatDate (date) {
+      return DateUtils.formatDate(date);
     }
   },
   watch: {
@@ -89,6 +93,7 @@ export default {
     width: 80%;
   }
   .article-title{
+    display: inline-block;
     font-size: 24px;
   }
   .article-content{
@@ -123,6 +128,7 @@ export default {
   }
   .article-attr {
     margin-top: 5px;
+    margin-left: 5px;
   }
   .article-attr div{
     font-size: 12px;
