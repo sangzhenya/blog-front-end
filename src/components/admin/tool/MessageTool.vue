@@ -37,7 +37,7 @@ export default {
   },
   methods: {
     messageClick (index) {
-      alert(index);
+      this.$router.push('/admin/tool/message/edit/' + index);
     }
   }
 }

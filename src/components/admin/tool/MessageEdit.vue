@@ -4,8 +4,14 @@
       <div class="article-content">
         <Input class="content-input" type="textarea" :autosize="{minRows: 5, maxRows: 15}" placeholder="写点什么东西吧"></Input>
       </div>
+      <div class="file-content">
+        <Upload multiple :action="batchUploadUrl" :headers="headers" name="file">
+          <Button icon="ios-cloud-upload-outline">Upload files</Button>
+        </Upload>
+      </div>
       <div class="article-options">
-        <Button @click="saveArticle">保存</Button>
+        <Button type="error" class="article-option-button">删除</Button>
+        <Button class="article-option-button">保存</Button>
       </div>
     </div>
   </div>
@@ -13,7 +19,7 @@
 
 <script>
 // import axios from 'axios'
-// import CommonConfig from '@/config/common-config'
+import CommonConfig from '@/config/common-config'
 // import Cookies from 'js-cookie';
 import store from '@/vuex/store'
 
@@ -21,7 +27,11 @@ export default {
   name: 'MessageEdit',
   data () {
     return {
-      msg: ''
+      msg: '',
+      headers: {
+        Authorization: this.$store.getters.getAuthorizeKey
+      },
+      batchUploadUrl: CommonConfig.webDomain + 'admin/batch/upload'
     }
   },
   store,
@@ -43,6 +53,10 @@ export default {
   .article-content{
     border-bottom: 1px dashed #eaeaea;
   }
+  .file-content{
+    border-bottom: 1px dashed #eaeaea;
+    padding-bottom: 30px;
+  }
   .content-input{
     padding: 5px;
   }
@@ -50,7 +64,13 @@ export default {
     border: none;
     box-shadow: none;
   }
+  .file-content{
+    margin-top: 20px;
+  }
   .article-options{
-    margin-top: 30px;
+    margin-top: 20px;
+  }
+  .article-option-button{
+    margin-right: 15px;
   }
 </style>
