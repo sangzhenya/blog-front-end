@@ -3,11 +3,15 @@
     <BlogHeader :pageType = '"category"' />
     <div class="main-content">
       <div class="category-title">{{data.name}}</div>
-      <div>
-        <ul class="article-ul">
-          <li v-for="article in data.articleList" v-bind:key="article.id"><router-link :to="'/article/' + article.id"><div>{{article.title}}</div><div>{{article.createDate[0] + '-' + article.createDate[1] + '-' + article.createDate[2] +
-            ' ' + article.createDate[3] + ':' + article.createDate[4]}}</div></router-link></li>
-        </ul>
+      <div class="article-list">
+        <Timeline>
+          <TimelineItem :color="colorSet[Math.floor(Math.random() * 4)]" v-for="article in data.articleList" v-bind:key="article.id">
+            <router-link :to="'/article/' + article.id">
+              <div class="article-timeline">{{article.title}}
+                <Tag class="article-create-date">{{article.createDate | formatDate}}</Tag></div>
+            </router-link>
+            </TimelineItem>
+        </Timeline>
       </div>
     </div>
   </div>
@@ -17,6 +21,7 @@
 import BlogHeader from '@/components/BlogHeader'
 import axios from 'axios'
 import CommonConfig from '@/config/common-config'
+import DateUtils from '@/libs/date-utils'
 
 export default {
   name: 'CategoryArticle',
@@ -26,7 +31,13 @@ export default {
   data () {
     return {
       id: 0,
-      data: {}
+      data: {articleList: [{id: 0}]},
+      colorSet: ['blue', 'green', 'red', 'yellow']
+    }
+  },
+  filters: {
+    formatDate (date) {
+      return DateUtils.formatDate(date);
     }
   },
   methods: {
@@ -42,8 +53,8 @@ export default {
           'id': that.id
         }
       }).then(function (response) {
+        console.log(that.data);
         that.data = response.data.data;
-        console.log(that.data)
       }).catch(function (error) {
         console.log(error)
       });
@@ -59,7 +70,7 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style>
   a{
     color: inherit;
   }
@@ -73,26 +84,15 @@ export default {
   .category-title{
     font-size: 24px;
   }
-  .article-ul{
+  .article-list{
+    margin-left: 10px;
     margin-top: 20px;
   }
-  .article-ul li{
-    list-style: none;
-    line-height: 2;
-  }
-  .article-ul li:before{
-    content: '·';
-    font-weight: bolder;
-    margin-right: 10px;
-  }
-  .article-ul li div {
-    display: inline-block;
-  }
-  .article-ul li div:nth-child(1) {
-  }
-  .article-ul li div:nth-child(2) {
-    margin-left: 20px;
+  .article-timeline{
     font-size: 14px;
-    color: #999;
+    margin-top: -2px;
+  }
+  .article-create-date{
+    margin-left: 20px;
   }
 </style>

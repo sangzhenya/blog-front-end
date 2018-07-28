@@ -20,22 +20,27 @@
         </AutoComplete>
       </div>
       <div class="article-tags">
-        <Tag type="border" closable v-for="tag in article.tags" v-bind:key="tag.id">{{ tag.name }}</Tag>
+        <Tag type="border" closable @on-close="removeTag" v-for="tag in article.tags" v-bind:key="tag.id" :name="tag.name">{{ tag.name }}</Tag>
         <AutoComplete
           style="width: 180px;"
           v-model="tag"
           :data="tagSet"
           @on-search="searchTag"
           :filter-method="filterMethod"
+          @on-select="selectTag"
           icon="pricetag"
           placeholder="标签">
         </AutoComplete>
       </div>
+
+      <div class="article-summary">
+        <Input class="content-input" type="textarea" v-model="article.summary" :autosize="{minRows: 3, maxRows: 3}" placeholder="这里是简介"></Input>
+      </div>
       <div class="article-content">
-        <Input class="content-input" type="textarea" v-model="article.content" :autosize="{minRows: 20, maxRows: 25}" placeholder="写点什么东西吧"></Input>
+        <Input class="content-input" type="textarea" v-model="article.content" :autosize="{minRows: 20, maxRows: 20}" placeholder="写点什么东西吧"></Input>
       </div>
       <div class="article-options">
-        <Button>保存</Button>
+        <Button @click="saveArticle">保存</Button>
       </div>
     </div>
   </div>
@@ -61,6 +66,45 @@ export default {
   },
   store,
   methods: {
+    saveArticle () {
+      if (!this.article.title) {
+        this.$Message.error('标题为空');
+        return;
+      }
+      // console.log(this.article);
+      let that = this;
+      axios({
+        url: CommonConfig.webDomain + 'admin/save/article',
+        headers: {
+          Authorization: that.$store.getters.getAuthorizeKey
+        },
+        method: 'post',
+        data: that.article
+      }).then(function (response) {
+        if (response.data && response.data === 'Success') {
+          that.$Message.info('保存成功');
+        }
+        console.log(response.data);
+      }).catch(function (error) {
+        console.log(error)
+      });
+    },
+    selectTag (value) {
+      if (value) {
+        this.article.tags.push({name: value});
+        this.tag = '';
+      }
+    },
+    removeTag (event, name) {
+      let index = 0;
+      this.article.tags.forEach(function (item) {
+        if (item.name === name) {
+          return;
+        }
+        index += 1;
+      });
+      this.article.tags.splice(index, 1);
+    },
     filterMethod (value, option) {
       if (value && option) {
         return option.indexOf(value) !== -1;
@@ -156,17 +200,6 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
-  /*.line {
-    margin-bottom: 10px;
-  }
-  .title-line{
-    margin-top: 20px;
-  }
-  .title{
-    font-size: 20px;
-    line-height: 36px;
-    margin-left: 20px;
-  }*/
   .article-management-search{
     background-color: #fff;
     margin: 30px 230px auto 30px;
@@ -204,6 +237,11 @@ export default {
   .article-tags{
     padding-left: 10px;
     margin-bottom: 20px;
+  }
+
+  .article-summary{
+    border-bottom: 1px dashed #eaeaea;
+    margin-bottom: 10px;
   }
   .content-input{
     padding: 5px;

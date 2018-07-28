@@ -11,17 +11,17 @@
           </MenuItem>
           <MenuGroup title="内容管理">
             <MenuItem name="articleManage">
-              <Icon type="document-text"></Icon>
+              <Icon type="md-document" />
               文章管理
             </MenuItem>
             <MenuItem name="categoryManage">
-              <Icon type="edit"></Icon>
+              <Icon type="md-pricetags" />
               分类标签管理
             </MenuItem>
           </MenuGroup>
           <MenuGroup title="小工具">
             <MenuItem name="messageTool">
-              <Icon type="email"></Icon>
+              <Icon type="md-text" />
               信息中心
             </MenuItem>
           </MenuGroup>

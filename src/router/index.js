@@ -3,7 +3,8 @@ import Router from 'vue-router'
 import Util from '../libs/util';
 import Cookies from 'js-cookie';
 
-import store from '@/vuex/store'
+// eslint-disable-next-line
+//import store from '@/vuex/store'
 
 import {routers, mainRouter, appRouter, otherRouter} from './router';
 
@@ -16,7 +17,8 @@ const RouterConfig = {
 export const router = new Router(RouterConfig);
 
 router.beforeEach((to, from, next) => {
-  console.log(store.state.count);
+// eslint-disable-next-line
+//console.log(store.state.count);
   Util.title(to.meta.title);
   let curRouterObj = Util.getRouterObjByName([mainRouter], to.name);
   if (curRouterObj != null) {

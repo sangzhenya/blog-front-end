@@ -5,12 +5,17 @@
       <div class="contents">
         <div class="content" v-for="article in data.articles" v-bind:key="article.id">
           <router-link :to="'/article/' + article.id"><div class="article-title">{{article.title}}</div></router-link>
-          <div class="article-attr">
-            <div>{{ article.createDate | formatDate }}</div>
-          </div>
           <router-link :to="'/article/' + article.id">
             <div class="article-content">{{article.summary}}</div>
           </router-link>
+          <div class="article-attr">
+            <Tag type="border">{{article.createDate | formatDate}}</Tag>
+            <Tag :color="colorSet[Math.floor(Math.random() * 4)]">
+              <router-link :to="'/category/' + article.category.id">{{article.category.name}}</router-link>
+            </Tag>
+            <Tag type="border" :color="colorSet[Math.floor(Math.random() * 4)]"
+                 v-for="tag in article.tags" v-bind:key="tag.id" :name="tag.name">{{ tag.name }}</Tag>
+          </div>
         </div>
       </div>
       <div class="pages">
@@ -40,7 +45,8 @@ export default {
       page: 1,
       data: {
         page: 1
-      }
+      },
+      colorSet: ['primary', 'error', 'success', 'warning']
     }
   },
   methods: {
@@ -60,7 +66,7 @@ export default {
         }
       }).then(function (response) {
         that.data = response.data.data;
-        console.log(that.data)
+        // console.log(that.data)
       }).catch(function (error) {
         console.log(error)
       });
@@ -98,7 +104,6 @@ export default {
   }
   .article-content{
     margin-top: 5px;
-    margin-bottom: 30px;
   }
   .pages{
     margin-top: 50px;
@@ -127,22 +132,11 @@ export default {
     background-color: #eaeaea;
   }
   .article-attr {
-    margin-top: 5px;
-    margin-left: 5px;
+    margin-top: 10px;
+    margin-bottom: 30px;
   }
   .article-attr div{
     font-size: 12px;
     display: inline-block;
-  }
-  .article-tag-ul{
-    margin-left: 15px;
-    margin-right: 15px;
-  }
-  .article-tag-ul li {
-    list-style: none;
-    display: inline-block;
-  }
-  .article-tag-ul li:not(:last-child):after {
-    content: ', ';
   }
 </style>

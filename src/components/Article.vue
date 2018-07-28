@@ -1,20 +1,26 @@
 <template>
   <div>
     <div class="main-content">
-      <router-link to='/1'><div class="back-main">回首页</div></router-link>
-      <div class="title">{{data.title}}</div>
-      <div class="category">{{data.category.name}}</div>
-      <div>
-        <ul class="tg-ul">
-          <li v-for="tag in data.tags" v-bind:key="tag.id">标签1</li>
-        </ul>
-      </div>
+      <div class="title">{{article.title}}</div>
       <div class="content">
-        {{data.content}}
+        <div class="article-content" v-html="article.content"></div>
+        <div class="article-attr">
+          <Tag><router-link to='/1'>首页</router-link></Tag>
+          <Tag type="border">{{article.createDate | formatDate}}</Tag>
+          <Tag :color="colorSet[Math.floor(Math.random() * 4)]">
+            <router-link :to="'/category/' + article.category.id">{{article.category.name}}</router-link>
+          </Tag>
+          <Tag type="border" :color="colorSet[Math.floor(Math.random() * 4)]"
+               v-for="tag in article.tags" v-bind:key="tag.id" :name="tag.name">{{ tag.name }}</Tag>
+        </div>
       </div>
       <div class="pre-next-router">
-        <router-link :to="'/article/' + data.preArticle.id" v-if="data.preArticle != null"><div class="pre-router">上一篇： {{data.preArticle.title}}</div></router-link>
-        <router-link :to="'/article/' + data.nextArticle.id"  v-if="data.nextArticle != null"><div class="next-router">下一篇：{{data.nextArticle.title}}</div></router-link>
+        <router-link :to="'/article/' + article.preArticle.id" v-if="article.preArticle != null">
+          <div class="pre-router"><Icon type="ios-arrow-back" /> {{article.preArticle.title}}</div>
+        </router-link>
+        <router-link :to="'/article/' + article.nextArticle.id"  v-if="article.nextArticle != null">
+          <div class="next-router">{{article.nextArticle.title}} <Icon type="ios-arrow-forward" /></div>
+        </router-link>
       </div>
     </div>
   </div>
@@ -24,6 +30,9 @@
 import BlogHeader from '@/components/BlogHeader'
 import axios from 'axios'
 import CommonConfig from '@/config/common-config'
+import '@/assets/style/prism.css'
+import '@/assets/js/prism.js'
+import DateUtils from '@/libs/date-utils'
 
 export default {
   name: 'Article',
@@ -33,9 +42,15 @@ export default {
   data () {
     return {
       id: 0,
-      data: {
-        category: {}
+      colorSet: ['primary', 'error', 'success', 'warning'],
+      article: {
+        category: {id: 0}
       }
+    }
+  },
+  filters: {
+    formatDate (date) {
+      return DateUtils.formatDate(date);
     }
   },
   methods: {
@@ -51,8 +66,7 @@ export default {
           'id': that.id
         }
       }).then(function (response) {
-        that.data = response.data.data;
-        console.log(that.data)
+        that.article = response.data.data;
       }).catch(function (error) {
         console.log(error)
       });
@@ -73,33 +87,25 @@ export default {
     color: inherit;
   }
   .main-content{
+    box-shadow: 0 5px 30px 3px #cccccc;
     font-size: 16px;
-    margin-top: 30px;
-    margin-left: 10%;
-    padding-left: 30px;
+    margin: 50px 10%;
+    padding: 20px 30px;
     width: 80%;
-  }
-  .tg-ul{
-    display: inline-block;
-    margin-bottom: 20px;
-  }
-  .tg-ul li{
-    list-style: none;
-    display: inline-block;
-    width: 50px;
-    height: 24px;
   }
   .title{
     margin-top: 20px;
     font-size: 24px;
+    margin-bottom: 40px;
   }
-  .category {
-    font-size: 18px;
-    margin-top: 10px;
-    margin-bottom: 10px;
+  .content{
+    min-height: 600px;
+  }
+  .article-attr{
+    margin-top: 20px;
   }
   .pre-next-router {
-    margin-top: 50px;
+    margin-top: 30px;
     margin-bottom: 50px;
   }
   .pre-next-router div{

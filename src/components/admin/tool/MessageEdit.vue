@@ -1,0 +1,56 @@
+<template>
+  <div>
+    <div class="article-management-main">
+      <div class="article-content">
+        <Input class="content-input" type="textarea" :autosize="{minRows: 5, maxRows: 15}" placeholder="写点什么东西吧"></Input>
+      </div>
+      <div class="article-options">
+        <Button @click="saveArticle">保存</Button>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+// import axios from 'axios'
+// import CommonConfig from '@/config/common-config'
+// import Cookies from 'js-cookie';
+import store from '@/vuex/store'
+
+export default {
+  name: 'MessageEdit',
+  data () {
+    return {
+      msg: ''
+    }
+  },
+  store,
+  methods: {
+  },
+  mounted () {
+  }
+}
+</script>
+
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style>
+  .article-management-main{
+    background-color: #fff;
+    margin: 30px 230px auto 30px;
+    padding: 30px;
+    box-shadow: 0 5px 30px 3px #cccccc;
+  }
+  .article-content{
+    border-bottom: 1px dashed #eaeaea;
+  }
+  .content-input{
+    padding: 5px;
+  }
+  .content-input textarea:focus, .content-input textarea{
+    border: none;
+    box-shadow: none;
+  }
+  .article-options{
+    margin-top: 30px;
+  }
+</style>

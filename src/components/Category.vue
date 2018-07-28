@@ -2,11 +2,10 @@
   <div>
     <BlogHeader :pageType = '"category"' />
     <div class="category-content">
-      <ul class="category-ul">
-        <li v-for="category in categories" :key="category.name">
-          <router-link :to="'/category/' + category.id"><div :class="category.style">{{category.name}}</div></router-link>
-        </li>
-      </ul>
+      <Tag class="category" :color="colorSet[Math.floor(Math.random() * 4)]"
+           v-for="category in categories" v-bind:key="category.id" :name="category.name">
+        <router-link :to="'/category/' + category.id">{{category.name}}</router-link>
+      </Tag>
     </div>
   </div>
 </template>
@@ -23,7 +22,8 @@ export default {
   },
   data () {
     return {
-      categories: []
+      categories: [],
+      colorSet: ['primary', 'error', 'success', 'warning']
     }
   },
   methods: {
@@ -62,31 +62,11 @@ export default {
     padding-left: 20px;
     width: 80%;
   }
-  .category-ul li {
-    list-style: none;
-    display: inline-block;
-    text-align: center;
-    margin: auto 10px;
-  }
-  .category-ul div{
-    cursor: pointer;
+  .category{
+    margin-left: 5px;
+    margin-right: 5px;
     font-size: 16px;
-    padding: 5px 15px;
-    border-radius: 3px;
-  }
-  .style1{
-    background-color: burlywood;
-  }
-  .style2{
-    background-color: gray;
-  }
-  .style3{
-    background-color: green;
-  }
-  .style4{
-    background-color: greenyellow;
-  }
-  .style5{
-    background-color: darkseagreen;
+    line-height: 35px;
+    height: 35px;
   }
 </style>

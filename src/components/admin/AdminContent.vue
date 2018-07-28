@@ -59,7 +59,7 @@ export default {
     left: 0;
     bottom: 0;
     width: 200px;
-    background-color: #495060;
+    background-color: #515A6E;
   }
   .top-bar{
     position: fixed;
