@@ -165,7 +165,6 @@ export default {
     },
     searchArticle () {
       if (!this.$store.getters.getAuthorizeKey) {
-        debugger;
         Cookies.remove('user');
         this.$router.push('/admin/login');
       }
