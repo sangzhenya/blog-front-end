@@ -95,4 +95,17 @@ export default {
   .article-create-date{
     margin-left: 20px;
   }
+  @media (max-width: 800px) {
+    .main-content{
+      font-size: 16px;
+      margin-top: 10px;
+      margin-left: 5%;
+      padding: 0;
+      width: 90%;
+    }
+    .article-timeline{
+      font-size: 12px;
+      margin-top: 0;
+    }
+  }
 </style>

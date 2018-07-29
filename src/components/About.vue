@@ -48,4 +48,23 @@ export default {
     border-left: 2px solid #cccccc;
     background-color: #efefef;
   }
+  @media (max-width: 800px) {
+    .about-me {
+      margin: 30px 5%;
+      padding: 0;
+      font-size: 14px;
+      width: 90%;
+    }
+    .pre-desc{
+      margin-bottom: 0;
+    }
+    .photo{
+      width: 90%;
+    }
+    .sub-desc{
+      width: 100%;
+      margin-top: 0;
+      padding: 10px 10px;
+    }
+  }
 </style>

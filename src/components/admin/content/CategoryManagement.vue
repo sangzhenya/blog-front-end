@@ -204,4 +204,12 @@ export default {
     box-shadow: none;
     border-bottom: 1px solid #eaeaea;
   }
+  @media (max-width: 800px) {
+    .category-management{
+      background-color: #fff;
+      margin: 0;
+      padding: 10px;
+      box-shadow: none;
+    }
+  }
 </style>

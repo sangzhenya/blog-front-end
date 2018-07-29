@@ -108,4 +108,24 @@ export default {
     color: #333333;
     background-color: #eaeaea99;
   }
+  @media (max-width: 800px) {
+    .login-main{
+      position: relative;
+      background: hsla(0, 0%, 100%, .3);
+      margin-top: 40%;
+      width: 80%;
+      height: 250px;
+    }
+    .login-form{
+      margin-top: 20px;
+      margin-left: 5%;
+      margin-right: 5%;
+    }
+    .page-main {
+      background: url("https://i.loli.net/2018/07/29/5b5cff2951206.jpg") 0 / cover fixed;
+    }
+    .login-main:before {
+      background: url("https://i.loli.net/2018/07/29/5b5cff2951206.jpg") 0 / cover fixed;
+    }
+  }
 </style>

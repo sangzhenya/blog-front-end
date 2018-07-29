@@ -63,4 +63,13 @@ export default {
   .message-item:last-child{
     margin-bottom: 20px;
   }
+  @media (max-width: 800px) {
+    .message-main{
+      background-color: #fff;
+      margin: 0;
+      padding: 10px;
+      box-shadow: none;
+      word-break: break-all;
+    }
+  }
 </style>

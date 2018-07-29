@@ -250,4 +250,19 @@ export default {
     border: none;
     box-shadow: none;
   }
+  @media (max-width: 800px) {
+    .article-management-search{
+      background-color: #fff;
+      margin: 0;
+      padding: 10px;
+      box-shadow: none;
+      border-bottom: 1px dashed #eaeaea;
+    }
+    .article-management-main{
+      background-color: #fff;
+      margin: 0;
+      padding: 10px;
+      box-shadow: none;
+    }
+  }
 </style>

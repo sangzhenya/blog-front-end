@@ -114,4 +114,19 @@ export default {
   .next-router{
     float: right;
   }
+  @media (max-width: 800px) {
+    .main-content{
+      box-shadow: none;
+      font-size: 14px;
+      margin: 10px 5%;
+      padding: 0;
+      width: 90%;
+      word-break: break-all;
+    }
+    .title{
+      margin-top: 10px;
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+  }
 </style>

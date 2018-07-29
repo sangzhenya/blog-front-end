@@ -80,4 +80,31 @@ export default {
     width: 50%;
     border-bottom: 1px solid #eaeaea;
   }
+  @media (max-width: 800px) {
+    .header {
+      padding: 10px 0;
+      margin: 10px auto auto auto;
+      width: 100%;
+    }
+    .header-title{
+      padding-left: 10px;
+      font-size: 24px;
+    }
+
+    .header-menu {
+      width: 180px;
+      margin-left: 20px;
+    }
+    .header-menu li {
+      list-style: none;
+      display: inline-block;
+      width: 60px;
+      text-align: center;
+      font-size: 16px;
+    }
+    .header-line{
+      width: 90%;
+      margin-left: 10px;
+    }
+  }
 </style>

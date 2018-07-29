@@ -7,6 +7,9 @@
       <div class="top-bar">
         <TopBar />
       </div>
+      <div class="top-menu">
+        <TopMenu />
+      </div>
       <div class="right-content">
         <router-view></router-view>
       </div>
@@ -17,11 +20,12 @@
 <script>
 import LeftMenu from '@/components/admin/bar/LeftMenu'
 import TopBar from '@/components/admin/bar/TopBar'
+import TopMenu from '@/components/admin/bar/TopMenu'
 
 export default {
   name: 'AdminContent',
   components: {
-    LeftMenu, TopBar
+    LeftMenu, TopBar, TopMenu
   },
   data () {
     return {
@@ -67,6 +71,9 @@ export default {
     right: 0;
     height: 40px;
   }
+  .top-menu{
+    display: none;
+  }
   .right-content{
     overflow-y: auto;
     position: fixed;
@@ -75,5 +82,22 @@ export default {
     width: 100%;
     bottom: 0;
     background-color: #F0F0F0;
+  }
+  @media (max-width: 800px) {
+    .left-menu{
+      display: none;
+    }
+    .top-bar{
+      display: none;
+    }
+    .top-menu{
+      display: inherit;
+    }
+    .right-content{
+      overflow-y: auto;
+      position: inherit;
+      width: 100%;
+      background-color: #F0F0F0;
+    }
   }
 </style>

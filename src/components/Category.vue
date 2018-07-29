@@ -69,4 +69,12 @@ export default {
     line-height: 35px;
     height: 35px;
   }
+  @media (max-width: 800px) {
+    .category-content {
+      margin-left: 5%;
+      margin-top: 10px;
+      padding: 0;
+      width: 90%;
+    }
+  }
 </style>

@@ -139,4 +139,14 @@ export default {
     font-size: 12px;
     display: inline-block;
   }
+  @media (max-width: 800px) {
+    .main-content{
+      font-size: 16px;
+      margin-top: 10px;
+      margin-left: 5%;
+      padding: 0;
+      width: 90%;
+      word-break: break-all;
+    }
+  }
 </style>
