@@ -1,8 +1,12 @@
-// import Vue from 'vue';
+import Vue from 'vue';
 import Vuex from 'vuex'
 import Cookies from 'js-cookie';
 
 // Vue.use(Vuex);
+
+if (process.env.NODE_ENV === 'development') {
+  Vue.use(Vuex)
+}
 
 const state = {
   count: 1,

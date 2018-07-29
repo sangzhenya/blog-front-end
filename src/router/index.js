@@ -1,4 +1,4 @@
-// import Vue from 'vue'
+import Vue from 'vue'
 import Router from 'vue-router'
 import Util from '../libs/util';
 import Cookies from 'js-cookie';
@@ -9,6 +9,10 @@ import Cookies from 'js-cookie';
 import {routers, mainRouter, appRouter, otherRouter} from './router';
 
 // Vue.use(Router)
+
+if (process.env.NODE_ENV === 'development') {
+  Vue.use(Router)
+}
 
 const RouterConfig = {
   routes: routers

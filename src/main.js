@@ -6,6 +6,10 @@ import router from './router'
 import iView from 'iview';
 // import 'iview/dist/styles/iview.css';
 
+if (process.env.NODE_ENV === 'development') {
+  require('iview/dist/styles/iview.css')
+}
+
 Vue.config.productionTip = false;
 
 Vue.use(iView);
