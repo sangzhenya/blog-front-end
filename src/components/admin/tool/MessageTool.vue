@@ -1,14 +1,31 @@
 <template>
   <div>
     <div class="message-main">
-      <div class="message-item" v-for="(item, index) in items" v-bind:key="index" v-on:dblclick="messageClick(index)">
-        {{ item }}
+      <div class="message-item">
+        <router-link to="/admin/tool/message/edit/0"><Button>增加一条</Button></router-link>
+      </div>
+      <div class="message-item" v-for="message in messageList" v-bind:key="message.id" v-on:dblclick="messageClick(message.id)">
+        <div>{{ message.content }}</div>
+        <div class="message-files-view">
+          <Tag :color="colorSet[Math.floor(Math.random() * 4)]"
+               v-for="file in message.files" v-bind:key="file.id" :name="file.fileName">
+            <span @click="downloadFile(file)">{{file.fileName}} </span>
+          </Tag>
+        </div>
+        <div class="message-option">
+          <router-link :to="'/admin/tool/message/edit/' + message.id"><Button type="error">删除</Button></router-link>
+          <router-link :to="'/admin/tool/message/edit/' + message.id"><Button type="primary">编辑</Button></router-link>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import CommonConfig from '@/config/common-config'
+import axios from 'axios'
+import store from '@/vuex/store'
+
 export default {
   name: 'MessageTool',
   data () {
@@ -16,29 +33,66 @@ export default {
       msg: '',
       previewEnable: false,
       previewItem: '',
-      items: [
-        '<div>1AhighqualityUIToolkitbasedonVueAhighqualityUIToolkitbasedonVueAhighqualityUIToolkitbasedonVue.js</div>\n' +
-        '<div>视频提供了功能强大的方法帮助您证明您的观点。当您单击联机视频时，可以在想要添加的视频的嵌入代码中进行粘贴。您也可以键入一个关键字以联机搜索最适合您的文档的视频。为使您的文档具有专业外观，Word 提供了页眉、页脚、封面和文本框设计，这些设计可互为补充。例如，您可以添加匹配的封面、页眉和提要栏。\n' +
-        '单击“插入”，然后从不同库中选择所需元素。主题和样式也有助于文档保持协调。当您单击设计并选择新的主题时，图片、图表或 SmartArt 图形将会更改以匹配新的主题。当应用样式时，您的标题会进行更改以匹配新的主题。使用在需要位置出现的新按钮在 Word 中保存时间。\n' +
-        '若要更改图片适应文档的方式，请单击该图片，图片旁边将会显示布局选项按钮。当处理表格时，单击要添加行或列的位置，然后单击加号。在新的阅读视图中阅读更加容易。可以折叠文档某些部分并关注所需文本。如果在达到结尾处之前需要停止读取，Word 会记住您的停止位置 - 即使在另一个设备上。\n' +
-        '</div>',
-        '<div>2AhighqualityUIToolkitbasedonVueAhighqualityUIToolkitbasedonVueAhighqualityUIToolkitbasedonVue.js</div>\n' +
-        '<div>视频提供了功能强大的方法帮助您证明您的观点。当您单击联机视频时，可以在想要添加的视频的嵌入代码中进行粘贴。您也可以键入一个关键字以联机搜索最适合您的文档的视频。为使您的文档具有专业外观，Word 提供了页眉、页脚、封面和文本框设计，这些设计可互为补充。例如，您可以添加匹配的封面、页眉和提要栏。\n' +
-        '单击“插入”，然后从不同库中选择所需元素。主题和样式也有助于文档保持协调。当您单击设计并选择新的主题时，图片、图表或 SmartArt 图形将会更改以匹配新的主题。当应用样式时，您的标题会进行更改以匹配新的主题。使用在需要位置出现的新按钮在 Word 中保存时间。\n' +
-        '若要更改图片适应文档的方式，请单击该图片，图片旁边将会显示布局选项按钮。当处理表格时，单击要添加行或列的位置，然后单击加号。在新的阅读视图中阅读更加容易。可以折叠文档某些部分并关注所需文本。如果在达到结尾处之前需要停止读取，Word 会记住您的停止位置 - 即使在另一个设备上。\n' +
-        '</div>',
-        '<div>3AhighqualityUIToolkitbasedonVueAhighqualityUIToolkitbasedonVueAhighqualityUIToolkitbasedonVue.js</div>\n' +
-        '<div>视频提供了功能强大的方法帮助您证明您的观点。当您单击联机视频时，可以在想要添加的视频的嵌入代码中进行粘贴。您也可以键入一个关键字以联机搜索最适合您的文档的视频。为使您的文档具有专业外观，Word 提供了页眉、页脚、封面和文本框设计，这些设计可互为补充。例如，您可以添加匹配的封面、页眉和提要栏。\n' +
-        '单击“插入”，然后从不同库中选择所需元素。主题和样式也有助于文档保持协调。当您单击设计并选择新的主题时，图片、图表或 SmartArt 图形将会更改以匹配新的主题。当应用样式时，您的标题会进行更改以匹配新的主题。使用在需要位置出现的新按钮在 Word 中保存时间。\n' +
-        '若要更改图片适应文档的方式，请单击该图片，图片旁边将会显示布局选项按钮。当处理表格时，单击要添加行或列的位置，然后单击加号。在新的阅读视图中阅读更加容易。可以折叠文档某些部分并关注所需文本。如果在达到结尾处之前需要停止读取，Word 会记住您的停止位置 - 即使在另一个设备上。\n' +
-        '</div>'
-      ]
+      colorSet: ['primary', 'error', 'success', 'warning'],
+      items: [],
+      messageList: []
     }
   },
+  store,
   methods: {
     messageClick (index) {
       this.$router.push('/admin/tool/message/edit/' + index);
+    },
+    downloadFile (file) {
+      let that = this;
+      axios({
+        url: CommonConfig.webDomain + 'admin/download',
+        headers: {
+          Authorization: that.$store.getters.getAuthorizeKey
+        },
+        method: 'post',
+        data: {
+          id: file.id
+        }
+      }).then(function (response) {
+        if (response.data) {
+          that.download(response, file);
+        }
+      }).catch(function (error) {
+        that.$Message.error(error);
+      });
+    },
+    download (data, file) {
+      console.log(file);
+      if (!data) {
+        return
+      }
+      let url = window.URL.createObjectURL(new Blob([data]));
+      let link = document.createElement('a');
+      link.style.display = 'none';
+      link.href = url;
+      link.setAttribute('download', file.fileName);
+
+      document.body.appendChild(link);
+      link.click()
     }
+  },
+  mounted () {
+    let that = this;
+    axios({
+      url: CommonConfig.webDomain + 'admin/list/message',
+      headers: {
+        Authorization: that.$store.getters.getAuthorizeKey
+      },
+      method: 'post'
+    }).then(function (response) {
+      if (response.data) {
+        that.messageList = response.data;
+        console.log(response.data);
+      }
+    }).catch(function (error) {
+      console.log(error)
+    });
   }
 }
 </script>
@@ -63,6 +117,13 @@ export default {
   .message-item:last-child{
     margin-bottom: 20px;
   }
+  .message-option{
+    margin-top: 10px;
+    display: none;
+  }
+  .message-files-view{
+    margin-top: 10px;
+  }
   @media (max-width: 800px) {
     .message-main{
       background-color: #fff;
@@ -70,6 +131,9 @@ export default {
       padding: 10px;
       box-shadow: none;
       word-break: break-all;
+    }
+    .message-option{
+      display: inherit;
     }
   }
 </style>

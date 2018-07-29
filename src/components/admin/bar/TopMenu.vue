@@ -23,7 +23,7 @@
           用户
         </template>
         <MenuItem name="defaultUser">Xin Yue</MenuItem>
-        <MenuItem name="defaultLogout"><span @click="loginOut">退出</span></MenuItem>
+        <MenuItem name="defaultLogout">退出</MenuItem>
       </Submenu>
     </Menu>
   </div>
@@ -40,15 +40,17 @@ export default {
     }
   },
   methods: {
-    loginOut () {
-      Cookies.remove('user');
-      this.$router.push('/login');
-    },
     handleChange (name) {
-      if (name && name !== 'defaultUser' && name !== 'defaultLogout') {
-        this.$router.push({
-          name: name
-        });
+      if (name) {
+        if (name === 'defaultLogout') {
+          Cookies.remove('user');
+          this.$router.push('/login');
+        }
+        if (name !== 'defaultUser') {
+          this.$router.push({
+            name: name
+          });
+        }
       }
       // this.$emit('on-change', name);
     }

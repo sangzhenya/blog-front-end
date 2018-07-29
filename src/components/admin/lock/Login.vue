@@ -26,7 +26,7 @@ export default {
   name: 'AdminLogin',
   data () {
     return {
-      userName: 'admin',
+      userName: '',
       password: '',
       msg: 'hello vuex'
     }
@@ -35,6 +35,10 @@ export default {
   methods: {
     login () {
       let that = this;
+      if (that.userName === '' || that.password === '') {
+        that.$Message.error('用户名或密码均必填');
+        return;
+      }
       axios({
         url: CommonConfig.webDomain + 'admin/login',
         method: 'post',
@@ -43,11 +47,15 @@ export default {
           'password': that.password
         }
       }).then(function (response) {
-        console.log(response.data);
-        Cookies.set('user', that.userName);
-        that.$store.state.authorizeKey = response.data.result;
-        Cookies.set('authorizeKey', response.data.result);
-        that.$router.push('/admin/index');
+        if (response.data && response.data.status === 201) {
+          that.$Message.info('登录成功');
+          that.$store.state.authorizeKey = response.data.result;
+          Cookies.set('user', that.userName);
+          Cookies.set('authorizeKey', response.data.result);
+          that.$router.push('/admin/index');
+        } else {
+          that.$Message.error('用户名或密码错误');
+        }
       }).catch(function (error) {
         console.log(error)
       });
