@@ -177,4 +177,12 @@ export default {
     padding-bottom: 20px;
     border-bottom: 1px dashed #eaeaea;
   }
+  @media (max-width: 800px) {
+    .message-management-main{
+      margin: 0;
+      padding: 10px;
+      box-shadow: none;
+      word-break: break-all;
+    }
+  }
 </style>

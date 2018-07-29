@@ -1,8 +1,8 @@
-import Vue from 'vue';
+// import Vue from 'vue';
 import Vuex from 'vuex'
 import Cookies from 'js-cookie';
 
-Vue.use(Vuex);
+// Vue.use(Vuex);
 
 const state = {
   count: 1,

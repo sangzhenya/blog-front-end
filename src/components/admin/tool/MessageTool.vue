@@ -126,7 +126,6 @@ export default {
   }
   @media (max-width: 800px) {
     .message-main{
-      background-color: #fff;
       margin: 0;
       padding: 10px;
       box-shadow: none;
