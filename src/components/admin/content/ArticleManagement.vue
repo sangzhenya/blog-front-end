@@ -33,7 +33,7 @@
         </AutoComplete>
       </div>
 
-      <div class="article-summary">
+      <div class="article-summary-admin">
         <Input class="content-input" type="textarea" v-model="article.summary" :autosize="{minRows: 3, maxRows: 3}" placeholder="这里是简介"></Input>
       </div>
       <div class="article-content">
@@ -239,7 +239,7 @@ export default {
     margin-bottom: 20px;
   }
 
-  .article-summary{
+  .article-summary-admin{
     border-bottom: 1px dashed #eaeaea;
     margin-bottom: 10px;
   }

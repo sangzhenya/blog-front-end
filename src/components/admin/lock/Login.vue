@@ -27,7 +27,7 @@ export default {
   data () {
     return {
       userName: 'admin',
-      password: 'admin',
+      password: '',
       msg: 'hello vuex'
     }
   },

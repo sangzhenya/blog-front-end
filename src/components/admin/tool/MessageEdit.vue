@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="article-management-main">
+    <div class="message-management-main">
       <div class="article-content">
         <Input class="content-input" type="textarea" :autosize="{minRows: 5, maxRows: 15}" placeholder="写点什么东西吧"></Input>
       </div>
@@ -44,7 +44,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
-  .article-management-main{
+  .message-management-main{
     background-color: #fff;
     margin: 30px 230px auto 30px;
     padding: 30px;
