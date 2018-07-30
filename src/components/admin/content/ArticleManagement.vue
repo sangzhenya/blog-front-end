@@ -28,7 +28,8 @@
           @on-search="searchTag"
           :filter-method="filterMethod"
           @on-select="selectTag"
-          icon="pricetag"
+          @on-blur="blurTag"
+          icon="md-pricetag"
           placeholder="标签">
         </AutoComplete>
       </div>
@@ -95,6 +96,12 @@ export default {
         this.tag = '';
       }
     },
+    blurTag () {
+      if (this.tagSet.indexOf(this.tag) !== -1) {
+        this.article.tags.push({name: this.tag});
+        this.tag = '';
+      }
+    },
     removeTag (event, name) {
       let index = 0;
       this.article.tags.forEach(function (item) {
@@ -138,7 +145,6 @@ export default {
       });
     },
     searchTag () {
-      console.log(this.tag);
       let that = this;
       axios({
         url: CommonConfig.webDomain + 'admin/search/tag',
