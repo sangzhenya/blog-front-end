@@ -3,7 +3,7 @@
     <div class="global-va-main-content">
       <div class="global-va-title">{{article.title}}</div>
       <div class="global-va-content">
-        <div class="global-va-article-content" v-html="article.content" hljs></div>
+        <div class="global-va-article-content" v-html="article.content"></div>
         <div class="global-va-article-attr">
           <Tag><router-link to='/1'>首页</router-link></Tag>
           <Tag type="border">{{article.createDate | formatDate}}</Tag>
@@ -31,7 +31,6 @@ import BlogHeader from '@/components/BlogHeader'
 import axios from 'axios'
 import CommonConfig from '@/config/common-config'
 import '@/assets/style/prism.css'
-import '@/assets/js/prism.js'
 import DateUtils from '@/libs/date-utils'
 
 export default {
