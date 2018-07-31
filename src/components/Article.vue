@@ -82,7 +82,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
-  .global-va-article-content h1,h2,h3,h4 {
+  .global-va-article-content h1, .global-va-article-content h2, .global-va-article-content  h3, .global-va-article-content  h4 {
     margin-top: 1.33em;
     margin-bottom: 1.33em;
   }
@@ -90,7 +90,7 @@ export default {
     margin-top: 1em;
     margin-bottom: 1em;
   }
-  .global-va-article-content ol,ul {
+  .global-va-article-content ol, .global-va-article-content ul {
     margin-top: 1em;
     margin-bottom: 1em;
     margin-left: 40px;
