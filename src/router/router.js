@@ -80,7 +80,9 @@ export const mainRouter = {
     },
     {
       path: 'about',
-      title: 'about',
+      meta: {
+        title: 'About'
+      },
       name: 'about',
       component: () => import('@/components/About')
     },
@@ -89,6 +91,14 @@ export const mainRouter = {
       title: 'article',
       name: 'article',
       component: () => import('@/components/Article')
+    },
+    {
+      path: 'demo/article',
+      meta: {
+        title: 'Demo Article'
+      },
+      name: 'demoArticle',
+      component: () => import('@/components/demo/ArticleDemo')
     }
   ]
 };

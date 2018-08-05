@@ -16,3 +16,4 @@ yarn-error.log*
 *.bak
 
 src/assets/img/
+src/components/demo

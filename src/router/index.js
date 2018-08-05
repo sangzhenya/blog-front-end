@@ -21,8 +21,8 @@ const RouterConfig = {
 export const router = new Router(RouterConfig);
 
 router.beforeEach((to, from, next) => {
-// eslint-disable-next-line
-//console.log(store.state.count);
+//  console.log(store.state.count);
+//  console.log(to)
   Util.title(to.meta.title);
   let curRouterObj = Util.getRouterObjByName([mainRouter], to.name);
   if (curRouterObj != null) {

@@ -30,7 +30,6 @@
 import BlogHeader from '@/components/BlogHeader'
 import axios from 'axios'
 import CommonConfig from '@/config/common-config'
-import '@/assets/style/prism.css'
 import DateUtils from '@/libs/date-utils'
 
 export default {
@@ -94,6 +93,31 @@ export default {
     margin-top: 1em;
     margin-bottom: 1em;
     margin-left: 40px;
+  }
+  .global-va-article-content blockquote{
+    background-color: #F6F6F6;
+    padding: 10px 30px 10px 10px;
+    border-left: 2px solid #009A61;
+    display: inline-block;
+  }
+  .global-va-article-content .url{
+    color: #1753e4;
+  }
+  .global-va-article-content pre {
+    background-color: #f5f2f0;
+    padding: 1em;
+    margin: .5em 0;
+    overflow: auto;
+    color: #000;
+    font-family: Consolas, Monaco, Andale Mono, Ubuntu Mono, monospace;
+    text-align: left;
+    white-space: pre;
+    word-spacing: normal;
+    word-break: normal;
+    word-wrap: normal;
+    line-height: 1.5;
+    tab-size: 4;
+    hyphens: none;
   }
   a{
     color: inherit;
