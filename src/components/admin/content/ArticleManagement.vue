@@ -20,18 +20,8 @@
         </AutoComplete>
       </div>
       <div class="article-tags">
-        <Tag type="border" closable @on-close="removeTag" v-for="tag in article.tags" v-bind:key="tag.id" :name="tag.name">{{ tag.name }}</Tag>
-        <AutoComplete
-          style="width: 180px;"
-          v-model="tag"
-          :data="tagSet"
-          @on-search="searchTag"
-          :filter-method="filterMethod"
-          @on-select="selectTag"
-          @on-blur="blurTag"
-          icon="md-pricetag"
-          placeholder="标签">
-        </AutoComplete>
+        <Tag :checkable="true" v-for="tag in checkedTagList" @on-change="uncheckTag" v-bind:key="tag.id" :name="tag.name" :color="tag.color" :checked="true">{{ tag.name }}</Tag>
+        <Tag :checkable="true" v-for="tag in uncheckedTagList" @on-change="checkTag" v-bind:key="tag.id" :name="tag.name" :color="tag.color" :checked="false">{{ tag.name }}</Tag>
       </div>
 
       <div class="article-summary-admin">
@@ -41,6 +31,7 @@
         <Input class="content-input" type="textarea" v-model="article.content" :autosize="{minRows: 20, maxRows: 20}" placeholder="写点什么东西吧"></Input>
       </div>
       <div class="article-options">
+        <Button class="delete-button" @click="deleteArticle" type="error">删除</Button>
         <Button @click="saveArticle">保存</Button>
       </div>
     </div>
@@ -61,12 +52,67 @@ export default {
       msg: '',
       category: [],
       tagSet: [],
+      colorSet: ['primary', 'error', 'success', 'warning'],
       tag: '',
+      uncheckedTagList: [],
+      checkedTagList: [],
       article: {category: {}, tags: [{name: 'Demo Tag'}]}
     }
   },
   store,
   methods: {
+    uncheckTag (checked, name) {
+      console.log(checked, name);
+      let that = this;
+      this.checkedTagList.forEach(function (item, index) {
+        if (item.name === name) {
+          that.uncheckedTagList.push(item);
+          that.checkedTagList.splice(index, 1);
+        }
+      });
+      this.article.tags.forEach(function (item, index) {
+        if (item.name === name) {
+          that.article.tags.splice(index, 1);
+        }
+      });
+      console.log(that.article.tags);
+    },
+    checkTag (checked, name) {
+      let that = this;
+      this.uncheckedTagList.forEach(function (item, index) {
+        if (item.name === name) {
+          that.checkedTagList.push(item);
+          that.article.tags.push(item);
+          that.uncheckedTagList.splice(index, 1);
+        }
+      });
+      console.log(that.article.tags);
+    },
+    deleteArticle () {
+      if (!this.article.id) {
+        this.$Message.error('无法删除该文章');
+        return;
+      }
+      // console.log(this.article);
+      let that = this;
+      axios({
+        url: CommonConfig.webDomain + 'admin/delete/article',
+        headers: {
+          Authorization: that.$store.getters.getAuthorizeKey
+        },
+        method: 'post',
+        data: {
+          id: that.article.id
+        }
+      }).then(function (response) {
+        if (response.data && response.data === 'Success') {
+          that.$Message.info('删除成功');
+        }
+        console.log(response.data);
+      }).catch(function (error) {
+        console.log(error)
+      });
+    },
     saveArticle () {
       if (!this.article.title) {
         this.$Message.error('标题为空');
@@ -89,18 +135,6 @@ export default {
       }).catch(function (error) {
         console.log(error)
       });
-    },
-    selectTag (value) {
-      if (value) {
-        this.article.tags.push({name: value});
-        this.tag = '';
-      }
-    },
-    blurTag () {
-      if (this.tagSet.indexOf(this.tag) !== -1) {
-        this.article.tags.push({name: this.tag});
-        this.tag = '';
-      }
     },
     removeTag (event, name) {
       let index = 0;
@@ -136,32 +170,6 @@ export default {
           response.data.forEach(function (item) {
             that.category.push(item.name);
           });
-          console.log(response.data)
-        } else {
-          that.$Message.error('没有找到相关的文章');
-        }
-      }).catch(function (error) {
-        console.log(error)
-      });
-    },
-    searchTag () {
-      let that = this;
-      axios({
-        url: CommonConfig.webDomain + 'admin/search/tag',
-        headers: {
-          Authorization: that.$store.getters.getAuthorizeKey
-        },
-        method: 'post',
-        data: {
-          searchKey: that.tag
-        }
-      }).then(function (response) {
-        that.tagSet = [];
-        if (response.data) {
-          response.data.forEach(function (item) {
-            that.tagSet.push(item.name);
-          });
-          console.log(response.data)
         } else {
           that.$Message.error('没有找到相关的文章');
         }
@@ -185,12 +193,41 @@ export default {
           searchKey: that.searchKeyword
         }
       }).then(function (response) {
-        // that.data = response.data.data;
         if (response.data) {
           that.article = response.data;
-          console.log(that.article)
+          let articleTagList = [];
+          that.checkedTagList = [];
+          that.article.tags.forEach(function (item) {
+            articleTagList.push(item.name);
+            let index = Math.floor(Math.random() * 4);
+            that.checkedTagList.push({
+              color: that.colorSet[index],
+              name: item.name,
+              id: item.id + 1000
+            })
+          });
+          console.log('--------------');
+          console.log(articleTagList);
+          console.log('--------------');
+          that.uncheckedTagList.forEach(function (item, index) {
+            console.log(articleTagList.indexOf(item.name) !== -1);
+            if (articleTagList.indexOf(item.name) !== -1) {
+              console.log(index);
+              console.log(item.name);
+              // that.uncheckedTagList.splice(index, 1);
+            }
+            // Vue.set(that.tagList, index, item);
+          });
+          articleTagList.forEach(function (name) {
+            that.uncheckedTagList.forEach(function (oriItem, index) {
+              if (oriItem.name === name) {
+                that.uncheckedTagList.splice(index, 1);
+              }
+            })
+          });
+          console.log(that.tagList);
         } else {
-          that.article = {category: {}, tags: [{name: 'Demo Tag'}]};
+          that.article = {category: {}, tags: [{name: ''}]};
           that.$Message.error('没有找到相关的文章');
         }
       }).catch(function (error) {
@@ -199,6 +236,28 @@ export default {
     }
   },
   mounted () {
+    let that = this;
+    axios({
+      url: CommonConfig.webDomain + 'admin/list/tag',
+      headers: {
+        Authorization: that.$store.getters.getAuthorizeKey
+      },
+      method: 'post'
+    }).then(function (response) {
+      if (response.data) {
+        that.tagList = [];
+        response.data.forEach(function (item) {
+          let index = Math.floor(Math.random() * 4);
+          that.uncheckedTagList.push({
+            color: that.colorSet[index],
+            name: item.name,
+            id: item.id
+          })
+        })
+      }
+    }).catch(function (error) {
+      console.log(error)
+    });
   }
 }
 </script>
@@ -254,6 +313,9 @@ export default {
   .content-input textarea:focus, .content-input textarea{
     border: none;
     box-shadow: none;
+  }
+  .delete-button{
+    margin-right: 10px;
   }
   @media (max-width: 800px) {
     .article-management-search{

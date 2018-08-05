@@ -5,27 +5,18 @@
       <div class="global-va-content">
         <div class="global-va-article-content">
           <div>
-            <blockquote>这里默认你是已经安装好pip和easy_install，并且已经配置好环境变量</blockquote>
-            <h3>方法一</h3>
-            <div style="margin-left: 10px;">
-              <p>直接通过</p>
-              <pre>pip install 第三方库的名称</pre>
-              <p>或者</p>
-              <pre>easy_install 第三方库的名称</pre>
-              <p>以上两种方法简单直接可以成功的安装绝大多数第三方的库文件，但是部分文件也许是和底层关系密切，所以通过以上方法安装的时候可能由于有部分的依赖文件没有安装导致安装失败，此时就要使用第二种安装方法了！</p>
-            </div>
-            <h3>方法二</h3>
-            <div style="margin-left: 10px;">
-              <p>首先通过</p>
-              <pre>pip install wheel</pre>
-              <p>安装完成wheel</p>
-              <p>然后到  <a href='http://www.lfd.uci.edu/~gohlke/pythonlibs/' target='_blank' class='url'>http://www.lfd.uci.edu/~gohlke/pythonlibs/</a>  找到你需要的库文件下载下来，这里应该是编译好的可以直接使用的。</p>
-              <p>然后通过命令提示符（管理员权限）运行</p>
-              <pre>wheel install 你下载的文件名（包含后缀）</pre>
-              <p>如果什么都没有显示证明你已经安装成功了，这时你可以通过python简单的测试一下是否安装成功。</p>
-              <p>如果提示平台不对，那就换一个连接找到时候你电脑的版本下载安装。</p>
-            </div>
-            <i>通过以上方法你基本上可以顺利的安装第三方的库文件了</i>
+            <pre># 开启gzip
+gzip on;
+# 启用gzip压缩的最小文件，小于设置值的文件将不会压缩
+gzip_min_length 1k;
+# gzip 压缩级别，1-10，数字越大压缩的越好，也越占用CPU时间
+gzip_comp_level 2;
+# 进行压缩的文件类型。javascript有多种形式。其中的值可以在 mime.types 文件中找到。
+gzip_types text/plain application/javascript application/x-javascript text/css application/xml text/javascript application/x-httpd-php image/jpeg image/gif image/png font/ttf font/otf image/svg+xml;
+# 是否在http header中添加Vary: Accept-Encoding，建议开启
+gzip_vary on;
+# 禁用IE 6 gzip
+gzip_disable "MSIE [1-6]\.";</pre>
           </div>
         </div>
         <div class="global-va-article-attr">
