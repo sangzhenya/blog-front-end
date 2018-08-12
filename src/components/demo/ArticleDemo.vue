@@ -4,20 +4,21 @@
       <div class="global-va-title"> Article Demo </div>
       <div class="global-va-content">
         <div class="global-va-article-content">
-          <div>
-            <pre># 开启gzip
-gzip on;
-# 启用gzip压缩的最小文件，小于设置值的文件将不会压缩
-gzip_min_length 1k;
-# gzip 压缩级别，1-10，数字越大压缩的越好，也越占用CPU时间
-gzip_comp_level 2;
-# 进行压缩的文件类型。javascript有多种形式。其中的值可以在 mime.types 文件中找到。
-gzip_types text/plain application/javascript application/x-javascript text/css application/xml text/javascript application/x-httpd-php image/jpeg image/gif image/png font/ttf font/otf image/svg+xml;
-# 是否在http header中添加Vary: Accept-Encoding，建议开启
-gzip_vary on;
-# 禁用IE 6 gzip
-gzip_disable "MSIE [1-6]\.";</pre>
-          </div>
+<div>
+  <p>内部类</p>
+  <pre>
+// 非静态内部类实例会默认有一个上一级类的实例的引用
+// 非静态内部类的实例化是这样的
+OrderDishes orderDishes = new OrderDishes(); // 外部类
+Dishes dish = orderDishes.new Dishes(); // 非静态内部类
+  </pre>
+  <p>静态内部类</p>
+  <pre>// 如果是静态内部类则内部类和外部类没有关联关系
+// 他们的关系只是在同一个文件中
+OrderDishes orderDishes = new OrderDishes(); // 外部类
+Dishes dish = new Dishes(); // 非静态内部类，正常方式的实例化</pre>
+  <p>JSON反序列化失败的原因是序列化框架不知道Dishes是内部类，所以创建对象失败了</p>
+</div>
         </div>
         <div class="global-va-article-attr">
           <Tag><router-link to='/1'>首页</router-link></Tag>

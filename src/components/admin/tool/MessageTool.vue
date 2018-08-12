@@ -53,21 +53,21 @@ export default {
         method: 'post',
         data: {
           id: file.id
-        }
+        },
+        responseType: 'arraybuffer'
       }).then(function (response) {
         if (response.data) {
-          that.download(response, file);
+          that.download(response.data, file);
         }
       }).catch(function (error) {
         that.$Message.error(error);
       });
     },
     download (data, file) {
-      console.log(file);
       if (!data) {
         return
       }
-      let url = window.URL.createObjectURL(new Blob([data]));
+      let url = window.URL.createObjectURL(new Blob([data], {type: ''}));
       let link = document.createElement('a');
       link.style.display = 'none';
       link.href = url;
