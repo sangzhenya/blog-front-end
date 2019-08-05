@@ -7,7 +7,9 @@ import 'iview/dist/styles/iview.css'
 
 Vue.config.productionTip = false
 
-Vue.use(iView)
+if (process.env.NODE_ENV === 'development') {
+  Vue.use(iView)
+}
 
 new Vue({
   router,

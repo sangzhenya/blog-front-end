@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Util from '../libs/util'
+import Util from '../utils/util'
 import Cookies from 'js-cookie'
 
 import { mainRouter, routers } from './router'

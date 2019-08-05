@@ -34,7 +34,7 @@
 import BlogHeader from '@/views/header/BlogHeader'
 import axios from 'axios'
 import CommonConfig from '@/config/common-config'
-import DateUtils from '@/libs/date-utils'
+import DateUtils from '@/utils/date-utils'
 
 export default {
   name: 'Content',

@@ -1,47 +1,47 @@
-let util = {};
+let util = {}
 util.title = function (title) {
-  title = title || 'Xin Yue';
-  window.document.title = title;
-};
+  title = title || 'Xin Yue'
+  window.document.title = title
+}
 
 util.openNewPage = function (vm, name, argu, query) {
-};
+}
 
 util.toDefaultPage = function (routers, name, route, next) {
-  let len = routers.length;
-  let i = 0;
-  let notHandle = true;
+  let len = routers.length
+  let i = 0
+  let notHandle = true
   while (i < len) {
     if (routers[i].name === name && routers[i].children && routers[i].redirect === undefined) {
       route.replace({
         name: routers[i].children[0].name
-      });
-      notHandle = false;
-      next();
-      break;
+      })
+      notHandle = false
+      next()
+      break
     }
-    i++;
+    i++
   }
   if (notHandle) {
-    next();
+    next()
   }
-};
+}
 
 util.getRouterObjByName = function (routers, name) {
   if (!name || !routers || !routers.length) {
-    return null;
+    return null
   }
-  let routerObj;
+  let routerObj
   for (let item of routers) {
     if (item.name === name) {
-      return item;
+      return item
     }
-    routerObj = util.getRouterObjByName(item.children, name);
+    routerObj = util.getRouterObjByName(item.children, name)
     if (routerObj) {
-      return routerObj;
+      return routerObj
     }
   }
-  return null;
-};
+  return null
+}
 
-export default util;
+export default util

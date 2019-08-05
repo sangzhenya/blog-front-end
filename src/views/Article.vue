@@ -28,7 +28,7 @@
 <script>
 import axios from 'axios'
 import CommonConfig from '@/config/common-config'
-import DateUtils from '@/libs/date-utils'
+import DateUtils from '@/utils/date-utils'
 import '@/assets/style/markdown.css'
 
 export default {
