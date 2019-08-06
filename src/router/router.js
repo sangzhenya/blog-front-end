@@ -22,6 +22,26 @@ export const mainRouter = {
       title: 'article',
       name: 'article',
       component: () => import('@/views/Article')
+    },
+    {
+      path: 'category',
+      title: 'category',
+      name: 'category',
+      component: () => import('@/views/Category')
+    },
+    {
+      path: 'category/:id(\\d+)',
+      title: 'categoryPage',
+      name: 'categoryPage',
+      component: () => import('@/views/CategoryArticle')
+    },
+    {
+      path: 'about',
+      meta: {
+        title: 'About'
+      },
+      name: 'about',
+      component: () => import('@/views/About')
     }
   ]
 }

@@ -29,7 +29,6 @@
 import axios from 'axios'
 import CommonConfig from '@/config/common-config'
 import DateUtils from '@/utils/date-utils'
-import '@/assets/style/markdown.css'
 
 export default {
   name: 'Article',
@@ -145,3 +144,4 @@ export default {
     }
   }
 </style>
+<style src="../assets/style/markdown.css" />

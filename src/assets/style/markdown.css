@@ -213,10 +213,10 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket { color: rgb(255, 34, 34); }
 
 :root { --side-bar-bg-color: #fafafa; --control-text-color: #777; }
 html { font-size: 16px; }
-body { font-family: "Open Sans", "Clear Sans", "Helvetica Neue", Helvetica, Arial, sans-serif !important;; color: rgb(51, 51, 51) !important; line-height: 1.6 !important;; }
+body { font-family: "Open Sans", "Clear Sans", "Helvetica Neue", Helvetica, Arial, sans-serif; color: rgb(51, 51, 51); line-height: 1.6; }
 #write > ul:first-child, #write > ol:first-child { margin-top: 30px; }
 a { color: rgb(65, 131, 196); }
-h1, h2, h3, h4, h5, h6 { position: relative; margin-top: 1rem !important; margin-bottom: 1rem !important; font-weight: bold; line-height: 1.4 !important; cursor: text; }
+h1, h2, h3, h4, h5, h6 { position: relative; margin-top: 1rem; margin-bottom: 1rem; font-weight: bold; line-height: 1.4; cursor: text; }
 h1:hover a.anchor, h2:hover a.anchor, h3:hover a.anchor, h4:hover a.anchor, h5:hover a.anchor, h6:hover a.anchor { text-decoration: none; }
 h1 tt, h1 code { font-size: inherit; }
 h2 tt, h2 code { font-size: inherit; }
@@ -224,17 +224,18 @@ h3 tt, h3 code { font-size: inherit; }
 h4 tt, h4 code { font-size: inherit; }
 h5 tt, h5 code { font-size: inherit; }
 h6 tt, h6 code { font-size: inherit; }
-h1 { padding-bottom: 0.3em !important; font-size: 2.25em; line-height: 1.2; border-bottom: 1px solid rgb(238, 238, 238); }
-h2 { padding-bottom: 0.3em !important; font-size: 1.75em; line-height: 1.225; border-bottom: 1px solid rgb(238, 238, 238); }
+h1 { padding-bottom: 0.3em; font-size: 2.25em; line-height: 1.2; border-bottom: 1px solid rgb(238, 238, 238); }
+h2 { padding-bottom: 0.3em; font-size: 1.75em; line-height: 1.225; border-bottom: 1px solid rgb(238, 238, 238); }
 h3 { font-size: 1.5em; line-height: 1.43; }
 h4 { font-size: 1.25em; }
 h5 { font-size: 1em; }
 h6 { font-size: 1em; color: rgb(119, 119, 119); }
-p, blockquote, ul, ol, dl, table { margin: 0.8em 0px !important; }
+p, blockquote, ol, dl, table { margin: 0.8em 0px; }
+ul { margin: 0.8em 0px }
 li > ol, li > ul { margin: 0px; }
 hr { height: 2px; padding: 0px; margin: 16px 0px; background-color: rgb(231, 231, 231); border: 0px none; overflow: hidden; box-sizing: content-box; }
 li p.first { display: inline-block; }
-ul, ol { padding-left: 30px !important;}
+.global-va-main-content ul, ol { padding-left: 30px;}
 ul:first-child, ol:first-child { margin-top: 0px; }
 ul:last-child, ol:last-child { margin-bottom: 0px; }
 blockquote { border-left: 4px solid rgb(223, 226, 229); padding: 0px 15px; color: rgb(119, 119, 119); }

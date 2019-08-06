@@ -110,6 +110,7 @@ export default {
     margin-bottom: 50px;
   }
   .page-ul{
+    padding-left: 0;
     display: inline-block;
     border-top: 1px solid #cccccc;
   }
