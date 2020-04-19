@@ -3,7 +3,7 @@
     <BlogHeader :pageType = '"about"' />
     <div class="about-me">
       <div class="pre-desc">风景很美、何不停下脚步看看。</div>
-      <p class="middle-desc"><img src="https://i.loli.net/2018/07/29/5b5c936618050.jpg" alt="sunrise" class="photo"></p>
+      <p class="middle-desc"><img src="http://img.programya.com/20200227143918.png" alt="sunrise" class="photo"></p>
       <div class="sub-desc">
         <p>如有任何对博客内容的疑问或者涉及到文章内容引用侵权的问题，请联系我邮件地址：sangzhenya@gmail.com。一定会及时处理回复，谢谢！</p>
       </div>
