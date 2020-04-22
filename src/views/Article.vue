@@ -2,7 +2,8 @@
   <div>
     <div class="global-va-main-content">
       <div class="global-va-content">
-        <div class="global-va-article-content" v-html="article.content"></div>
+        <!-- <div class="global-va-article-content" v-html="article.content"></div> -->
+        <markdown-it-vue class="global-va-article-content" :content="article.content" :options="options"/>
         <div class="global-va-article-attr">
           <Tag><router-link to='/1'>首页</router-link></Tag>
           <Tag type="border">{{article.createDate | formatDate}}</Tag>
@@ -29,15 +30,32 @@
 import axios from 'axios'
 import CommonConfig from '@/config/common-config'
 import DateUtils from '@/utils/date-utils'
+import MarkdownItVue from 'markdown-it-vue'
+import 'markdown-it-vue/dist/markdown-it-vue.css'
 
 export default {
   name: 'Article',
+  components: {
+    MarkdownItVue
+  },
   data () {
     return {
       id: 0,
       colorSet: ['primary', 'error', 'success', 'warning'],
       article: {
-        category: { id: 0 }
+        category: { id: 0 },
+        content: ''
+      },
+      options: {
+        markdownIt: {
+          linkify: true
+        },
+        linkAttributes: {
+          attrs: {
+            target: '_blank',
+            rel: 'noopener'
+          }
+        }
       }
     }
   },
@@ -144,4 +162,3 @@ export default {
     }
   }
 </style>
-<style src="../assets/style/markdown.css" />

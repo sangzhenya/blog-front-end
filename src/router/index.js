@@ -10,6 +10,7 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 const RouterConfig = {
+  mode: 'history',
   routes: routers
 }
 
