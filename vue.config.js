@@ -8,7 +8,6 @@ function resolve(dir) {
   return path.join(__dirname, dir)
 }
 
-
 const JS_CDN = [
     'https://cdn.bootcss.com/vue/2.6.10/vue.js',
     'https://cdn.bootcss.com/vuex/3.1.1/vuex.min.js',
