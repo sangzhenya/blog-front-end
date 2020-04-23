@@ -2,12 +2,12 @@
   <div>
     <div class="article-management-search">
       <div class="search-article">
-        <Input class="search-input" placeholder="开始搜索" v-model="searchKeyword" @on-enter="searchArticle()"></Input>
+        <Input class="search-input" placeholder="开始搜索" v-model="searchKeyword" @on-enter="searchArticle()" />
       </div>
     </div>
     <div class="article-management-main">
       <div class="article-title">
-        <Input size="large" class="title-input" placeholder="这里是标题" v-model="article.title"></Input>
+        <Input size="large" class="title-input" placeholder="这里是标题" v-model="article.title" />
       </div>
       <div class="article-category">
         <AutoComplete
@@ -25,10 +25,10 @@
       </div>
 
       <div class="article-summary-admin">
-        <Input class="content-input" type="textarea" v-model="article.summary" :autosize="{minRows: 3, maxRows: 3}" placeholder="这里是简介"></Input>
+        <Input class="content-input" type="textarea" v-model="article.summary" :autosize="{minRows: 3, maxRows: 3}" placeholder="这里是简介" />
       </div>
       <div class="article-content">
-        <Input class="content-input" type="textarea" v-model="article.content" :autosize="{minRows: 20, maxRows: 20}" placeholder="写点什么东西吧"></Input>
+        <Input class="content-input" type="textarea" v-model="article.content" :autosize="{minRows: 20, maxRows: 20}" placeholder="写点什么东西吧" />
       </div>
       <div class="article-options">
         <Button class="delete-button" @click="deleteArticle" type="error">删除</Button>
@@ -41,7 +41,7 @@
 <script>
 import axios from 'axios'
 import CommonConfig from '@/config/common-config'
-import Cookies from 'js-cookie';
+import Cookies from 'js-cookie'
 import store from '@/vuex/store'
 
 export default {
@@ -68,28 +68,28 @@ export default {
       }
       this.article.tags.forEach(function (item, index) {
         if (item.name === name) {
-          that.article.tags.splice(index, 1);
+          that.article.tags.splice(index, 1)
         }
-      });
+      })
     },
     checkTag (checked, name) {
       if (!this.article.tags) {
         this.article.tags = []
       }
-      let that = this;
+      let that = this
       this.uncheckedTagList.forEach(function (item, index) {
         if (item.name === name) {
-          that.article.tags.push(item);
+          that.article.tags.push(item)
         }
-      });
+      })
     },
     deleteArticle () {
       if (!this.article.id) {
-        this.$Message.error('无法删除该文章');
-        return;
+        this.$Message.error('无法删除该文章')
+        return
       }
-      // console.log(this.article);
-      let that = this;
+      // console.log(this.article)
+      let that = this
       axios({
         url: CommonConfig.adminURL + 'admin/delete/article',
         headers: {
@@ -101,19 +101,19 @@ export default {
         }
       }).then(function (response) {
         if (response.data && response.data === 'Success') {
-          that.$Message.info('删除成功');
+          that.$Message.info('删除成功')
         }
-        console.log(response.data);
+        console.log(response.data)
       }).catch(function (error) {
         console.log(error)
-      });
+      })
     },
     saveArticle () {
       if (!this.article.title) {
-        this.$Message.error('标题为空');
-        return;
+        this.$Message.error('标题为空')
+        return
       }
-      let that = this;
+      let that = this
       axios({
         url: CommonConfig.adminURL + 'admin/save/article',
         headers: {
@@ -123,32 +123,32 @@ export default {
         data: that.article
       }).then(function (response) {
         if (response.data && response.data === 'Success') {
-          that.$Message.info('保存成功');
+          that.$Message.info('保存成功')
         }
-        console.log(response.data);
+        console.log(response.data)
       }).catch(function (error) {
         console.log(error)
-      });
+      })
     },
     removeTag (event, name) {
-      let index = 0;
+      let index = 0
       this.article.tags.forEach(function (item) {
         if (item.name === name) {
-          return;
+          return
         }
-        index += 1;
-      });
-      this.article.tags.splice(index, 1);
+        index += 1
+      })
+      this.article.tags.splice(index, 1)
     },
     filterMethod (value, option) {
       if (value && option) {
-        return option.indexOf(value) !== -1;
+        return option.indexOf(value) !== -1
       }
-      return false;
+      return false
     },
     searchCategory () {
-      console.log(this.article.category.name);
-      let that = this;
+      console.log(this.article.category.name)
+      let that = this
       axios({
         url: CommonConfig.adminURL + 'admin/search/category',
         headers: {
@@ -159,24 +159,24 @@ export default {
           searchKey: that.article.category.name
         }
       }).then(function (response) {
-        that.category = [];
+        that.category = []
         if (response.data) {
           response.data.forEach(function (item) {
-            that.category.push(item.name);
-          });
+            that.category.push(item.name)
+          })
         } else {
-          that.$Message.error('没有找到相关的文章');
+          that.$Message.error('没有找到相关的文章')
         }
       }).catch(function (error) {
         console.log(error)
-      });
+      })
     },
     searchArticle () {
       if (!this.$store.getters.getAuthorizeKey) {
-        Cookies.remove('user');
-        this.$router.push('/admin/login');
+        Cookies.remove('user')
+        this.$router.push('/admin/login')
       }
-      let that = this;
+      let that = this
       axios({
         url: CommonConfig.adminURL + 'admin/search/article',
         headers: {
@@ -188,37 +188,37 @@ export default {
         }
       }).then(function (response) {
         if (response.data) {
-          that.article = response.data;
-          let articleTagList = [];
-          that.checkedTagList = [];
+          that.article = response.data
+          let articleTagList = []
+          that.checkedTagList = []
           that.article.tags = that.article.tags || []
           that.article.tags.forEach(function (item) {
-            articleTagList.push(item.name);
-            let index = Math.floor(Math.random() * 4);
+            articleTagList.push(item.name)
+            let index = Math.floor(Math.random() * 4)
             that.checkedTagList.push({
               color: that.colorSet[index],
               name: item.name,
               id: item.id + 1000
             })
-          });
+          })
           articleTagList.forEach(function (name) {
             that.uncheckedTagList.forEach(function (oriItem, index) {
               if (oriItem.name === name) {
-                that.uncheckedTagList.splice(index, 1);
+                that.uncheckedTagList.splice(index, 1)
               }
             })
-          });
+          })
         } else {
-          that.article = { category: {}, tags: [{ name: '' }] };
-          that.$Message.error('没有找到相关的文章');
+          that.article = { category: {}, tags: [{ name: '' }] }
+          that.$Message.error('没有找到相关的文章')
         }
       }).catch(function (error) {
         console.log(error)
-      });
+      })
     }
   },
   mounted () {
-    let that = this;
+    let that = this
     axios({
       url: CommonConfig.adminURL + 'admin/list/tag',
       headers: {
@@ -227,9 +227,9 @@ export default {
       method: 'post'
     }).then(function (response) {
       if (response.data) {
-        that.tagList = [];
+        that.tagList = []
         response.data.forEach(function (item) {
-          let index = Math.floor(Math.random() * 4);
+          let index = Math.floor(Math.random() * 4)
           that.uncheckedTagList.push({
             color: that.colorSet[index],
             name: item.name,
@@ -239,7 +239,7 @@ export default {
       }
     }).catch(function (error) {
       console.log(error)
-    });
+    })
   }
 }
 </script>

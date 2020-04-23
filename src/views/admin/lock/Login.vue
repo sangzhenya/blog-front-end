@@ -19,7 +19,7 @@
 <script>
 import axios from 'axios'
 import store from '@/vuex/store'
-import Cookies from 'js-cookie';
+import Cookies from 'js-cookie'
 import CommonConfig from '@/config/common-config'
 
 export default {
@@ -34,10 +34,10 @@ export default {
   store,
   methods: {
     login () {
-      let that = this;
+      let that = this
       if (that.userName === '' || that.password === '') {
-        that.$Message.error('用户名或密码均必填');
-        return;
+        that.$Message.error('用户名或密码均必填')
+        return
       }
       axios({
         url: CommonConfig.adminURL + 'admin/login',
@@ -48,17 +48,17 @@ export default {
         }
       }).then(function (response) {
         if (response.data && response.data.status === 201) {
-          that.$Message.info('登录成功');
-          that.$store.state.authorizeKey = response.data.result;
-          Cookies.set('user', that.userName);
-          Cookies.set('authorizeKey', response.data.result);
-          that.$router.push('/admin/index');
+          that.$Message.info('登录成功')
+          that.$store.state.authorizeKey = response.data.result
+          Cookies.set('user', that.userName)
+          Cookies.set('authorizeKey', response.data.result)
+          that.$router.push('/admin/index')
         } else {
-          that.$Message.error('用户名或密码错误');
+          that.$Message.error('用户名或密码错误')
         }
       }).catch(function (error) {
         console.log(error)
-      });
+      })
     }
   }
 }

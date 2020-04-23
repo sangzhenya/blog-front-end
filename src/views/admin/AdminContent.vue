@@ -40,14 +40,14 @@ export default {
   },
   methods: {
     paramsChange () {
-      this.indexType = this.routerMap[this.$route.name];
+      this.indexType = this.routerMap[this.$route.name]
     }
   },
   watch: {
     $route: 'paramsChange'
   },
   mounted () {
-    this.indexType = this.routerMap[this.$route.name];
+    this.indexType = this.routerMap[this.$route.name]
   }
 }
 </script>
