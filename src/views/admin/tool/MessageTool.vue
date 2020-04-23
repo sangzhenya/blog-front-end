@@ -41,10 +41,10 @@ export default {
   store,
   methods: {
     messageClick (index) {
-      this.$router.push('/admin/tool/message/edit/' + index);
+      this.$router.push('/admin/tool/message/edit/' + index)
     },
     downloadFile (file) {
-      let that = this;
+      let that = this
       axios({
         url: CommonConfig.webDomain + 'admin/download',
         headers: {
@@ -57,28 +57,28 @@ export default {
         responseType: 'arraybuffer'
       }).then(function (response) {
         if (response.data) {
-          that.download(response.data, file);
+          that.download(response.data, file)
         }
       }).catch(function (error) {
-        that.$Message.error(error);
-      });
+        that.$Message.error(error)
+      })
     },
     download (data, file) {
       if (!data) {
         return
       }
-      let url = window.URL.createObjectURL(new Blob([data], { type: '' }));
-      let link = document.createElement('a');
-      link.style.display = 'none';
-      link.href = url;
-      link.setAttribute('download', file.fileName);
+      let url = window.URL.createObjectURL(new Blob([data], { type: '' }))
+      let link = document.createElement('a')
+      link.style.display = 'none'
+      link.href = url
+      link.setAttribute('download', file.fileName)
 
-      document.body.appendChild(link);
+      document.body.appendChild(link)
       link.click()
     }
   },
   mounted () {
-    let that = this;
+    let that = this
     axios({
       url: CommonConfig.webDomain + 'admin/list/message',
       headers: {
@@ -87,12 +87,12 @@ export default {
       method: 'post'
     }).then(function (response) {
       if (response.data) {
-        that.messageList = response.data;
-        console.log(response.data);
+        that.messageList = response.data
+        console.log(response.data)
       }
     }).catch(function (error) {
       console.log(error)
-    });
+    })
   }
 }
 </script>

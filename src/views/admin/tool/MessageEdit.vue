@@ -2,7 +2,7 @@
   <div>
     <div class="message-management-main">
       <div class="message-content">
-        <Input class="content-input" type="textarea" :autosize="{minRows: 5, maxRows: 15}" v-model="message.content" placeholder="写点什么东西吧"></Input>
+        <Input class="content-input" type="textarea" :autosize="{minRows: 5, maxRows: 15}" v-model="message.content" placeholder="写点什么东西吧" />
       </div>
       <div class="exist-file-list">
         <Tag type="border" @on-close="removeTag" :color="colorSet[Math.floor(Math.random() * 4)]" closable v-for="file in message.files" v-bind:key="file.id" :name="file.fileName">{{file.fileName}}</Tag>
@@ -23,7 +23,7 @@
 <script>
 import axios from 'axios'
 import CommonConfig from '@/config/common-config'
-// import Cookies from 'js-cookie';
+// import Cookies from 'js-cookie'
 import store from '@/vuex/store'
 
 export default {
@@ -48,21 +48,21 @@ export default {
         fileSize: file.size,
         fileType: file.name.substring(file.name.lastIndexOf('.')),
         filePath: file.response
-      });
+      })
     },
     removeTag (event, name) {
-      let index = 0;
+      let index = 0
       this.message.files.forEach(function (item) {
         if (item.fileName === name) {
-          return;
+          return
         }
-        index += 1;
-      });
-      this.message.files.splice(index, 1);
+        index += 1
+      })
+      this.message.files.splice(index, 1)
     },
     saveMessage () {
       if (this.message.content) {
-        let that = this;
+        let that = this
         axios({
           url: CommonConfig.webDomain + 'admin/save/message',
           headers: {
@@ -72,18 +72,18 @@ export default {
           data: this.message
         }).then(function (response) {
           if (response.data) {
-            that.message = response.data;
-            that.$Message.info('保存成功');
+            that.message = response.data
+            that.$Message.info('保存成功')
           }
         }).catch(function (error) {
           console.log(error)
-        });
+        })
       } else {
-        this.$Message.error('内容为空');
+        this.$Message.error('内容为空')
       }
     },
     deleteMessage () {
-      let that = this;
+      let that = this
       if (that.message.id && that.message.id !== 0) {
         axios({
           url: CommonConfig.webDomain + 'admin/delete/message',
@@ -96,24 +96,24 @@ export default {
           }
         }).then(function (response) {
           if (response.data) {
-            that.$Message.info('删除成功');
-            that.$router.push('/admin/tool/message');
+            that.$Message.info('删除成功')
+            that.$router.push('/admin/tool/message')
           }
         }).catch(function (error) {
-          that.$Message.error(error);
-        });
+          that.$Message.error(error)
+        })
       } else {
-        this.$Message.error('内容为空');
+        this.$Message.error('内容为空')
       }
     },
     changePage () {
       if (this.$route.params.id) {
-        this.id = parseInt(this.$route.params.id);
+        this.id = parseInt(this.$route.params.id)
       }
       if (this.id === 0) {
-        return;
+        return
       }
-      let that = this;
+      let that = this
       axios({
         url: CommonConfig.webDomain + 'admin/search/message',
         headers: {
@@ -125,18 +125,18 @@ export default {
         }
       }).then(function (response) {
         if (response.data) {
-          that.message = response.data;
+          that.message = response.data
         }
       }).catch(function (error) {
         console.log(error)
-      });
+      })
     }
   },
   watch: {
     $route: 'changePage'
   },
   mounted () {
-    this.changePage();
+    this.changePage()
   }
 }
 </script>

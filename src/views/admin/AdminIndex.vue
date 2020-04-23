@@ -6,7 +6,6 @@
 </template>
 
 <script>
-import '../../assets/style/simplemde.min.css';
 import store from '@/vuex/store'
 
 export default {
