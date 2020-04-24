@@ -2,8 +2,8 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router/index'
 import store from './vuex/store'
-import iView from 'iview'
-import 'iview/dist/styles/iview.css'
+import ViewUI from 'view-design'
+import 'view-design/dist/styles/iview.css'
 
 Vue.config.productionTip = false
 
@@ -13,7 +13,7 @@ Vue.config.productionTip = false
 // console.log('------')
 
 if (process.env.NODE_ENV === 'development') {
-  Vue.use(iView)
+  Vue.use(ViewUI)
 }
 
 new Vue({

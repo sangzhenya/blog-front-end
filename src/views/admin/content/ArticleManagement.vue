@@ -13,15 +13,13 @@
         <AutoComplete
           class="category-input"
           v-model="article.category.name"
-          :data="category"
+          :data="categoryValueList"
           @on-search="searchCategory"
-          :filter-method="filterMethod"
           placeholder="这里是分类">
         </AutoComplete>
       </div>
       <div class="article-tags">
-        <Tag :checkable="true" v-for="tag in checkedTagList" @on-change="uncheckTag" v-bind:key="tag.id" :name="tag.name" :color="tag.color" :checked="true">{{ tag.name }}</Tag>
-        <Tag :checkable="true" v-for="tag in uncheckedTagList" @on-change="checkTag" v-bind:key="tag.id" :name="tag.name" :color="tag.color" :checked="false">{{ tag.name }}</Tag>
+        <Tag class="article-tag" :checkable="true" v-for="tag in tagList" @on-change="checkTag" v-bind:key="tag.id" :name="tag.name" :color="tag.color" :checked="tag.checked">{{ tag.name }}</Tag>
       </div>
 
       <div class="article-summary-admin">
@@ -50,167 +48,112 @@ export default {
     return {
       searchKeyword: '',
       msg: '',
-      category: [],
-      tagSet: [],
+      categoryValueList: [],
       colorSet: ['primary', 'error', 'success', 'warning'],
       tag: '',
-      uncheckedTagList: [],
-      checkedTagList: [],
-      article: { category: {}, tags: [{ name: 'Demo Tag' }] }
+      tagList: [],
+      article: { category: { name: '' }, tags: [{ name: '' }] }
     }
   },
   store,
   methods: {
-    uncheckTag (checked, name) {
-      let that = this
-      if (!this.article.tags) {
-        this.article.tags = []
-      }
-      this.article.tags.forEach(function (item, index) {
-        if (item.name === name) {
-          that.article.tags.splice(index, 1)
-        }
-      })
-    },
     checkTag (checked, name) {
-      if (!this.article.tags) {
-        this.article.tags = []
-      }
-      let that = this
-      this.uncheckedTagList.forEach(function (item, index) {
-        if (item.name === name) {
-          that.article.tags.push(item)
-        }
-      })
+      let tag = this.tagList.find(item => item.name === name)
+      tag.checked = checked
     },
     deleteArticle () {
+      let me = this
       if (!this.article.id) {
         this.$Message.error('无法删除该文章')
         return
       }
-      // console.log(this.article)
-      let that = this
       axios({
         url: CommonConfig.adminURL + 'admin/delete/article',
         headers: {
-          Authorization: that.$store.getters.getAuthorizeKey
+          Authorization: me.$store.getters.getAuthorizeKey
         },
         method: 'post',
         data: {
-          id: that.article.id
+          id: me.article.id
         }
-      }).then(function (response) {
+      }).then(response => {
         if (response.data && response.data === 'Success') {
-          that.$Message.info('删除成功')
+          me.$Message.info('删除成功')
         }
-        console.log(response.data)
-      }).catch(function (error) {
-        console.log(error)
-      })
+      }).catch(error => console.log(error))
     },
     saveArticle () {
+      let me = this
       if (!this.article.title) {
         this.$Message.error('标题为空')
         return
       }
-      let that = this
+      me.article.tags = []
+      me.tagList.filter(tag => tag.checked).forEach(tag => {
+        me.article.tags.push({ name: tag.name })
+      })
       axios({
         url: CommonConfig.adminURL + 'admin/save/article',
         headers: {
-          Authorization: that.$store.getters.getAuthorizeKey
+          Authorization: me.$store.getters.getAuthorizeKey
         },
         method: 'post',
-        data: that.article
+        data: me.article
       }).then(function (response) {
         if (response.data && response.data === 'Success') {
-          that.$Message.info('保存成功')
+          me.$Message.info('保存成功')
         }
-        console.log(response.data)
-      }).catch(function (error) {
-        console.log(error)
-      })
+      }).catch(error => console.log(error))
     },
-    removeTag (event, name) {
-      let index = 0
-      this.article.tags.forEach(function (item) {
-        if (item.name === name) {
-          return
-        }
-        index += 1
-      })
-      this.article.tags.splice(index, 1)
-    },
-    filterMethod (value, option) {
-      if (value && option) {
-        return option.indexOf(value) !== -1
-      }
-      return false
-    },
-    searchCategory () {
-      console.log(this.article.category.name)
-      let that = this
+    searchCategory (value) {
+      let me = this
       axios({
         url: CommonConfig.adminURL + 'admin/search/category',
         headers: {
-          Authorization: that.$store.getters.getAuthorizeKey
+          Authorization: me.$store.getters.getAuthorizeKey
         },
         method: 'post',
         data: {
-          searchKey: that.article.category.name
+          searchKey: me.article.category.name
         }
       }).then(function (response) {
-        that.category = []
         if (response.data) {
-          response.data.forEach(function (item) {
-            that.category.push(item.name)
-          })
-        } else {
-          that.$Message.error('没有找到相关的文章')
+          me.categoryValueList = (response.data || []).reduce((res, nex) => {
+            res.push(nex.name)
+            return res
+          }, [])
         }
-      }).catch(function (error) {
-        console.log(error)
-      })
+      }).catch(error => console.log(error))
     },
     searchArticle () {
-      if (!this.$store.getters.getAuthorizeKey) {
+      let me = this
+      if (!me.$store.getters.getAuthorizeKey) {
         Cookies.remove('user')
-        this.$router.push('/admin/login')
+        me.$router.push('/admin/login')
       }
-      let that = this
       axios({
         url: CommonConfig.adminURL + 'admin/search/article',
         headers: {
-          Authorization: that.$store.getters.getAuthorizeKey
+          Authorization: me.$store.getters.getAuthorizeKey
         },
         method: 'post',
         data: {
-          searchKey: that.searchKeyword
+          searchKey: me.searchKeyword
         }
       }).then(function (response) {
         if (response.data) {
-          that.article = response.data
-          let articleTagList = []
-          that.checkedTagList = []
-          that.article.tags = that.article.tags || []
-          that.article.tags.forEach(function (item) {
-            articleTagList.push(item.name)
-            let index = Math.floor(Math.random() * 4)
-            that.checkedTagList.push({
-              color: that.colorSet[index],
-              name: item.name,
-              id: item.id + 1000
-            })
-          })
-          articleTagList.forEach(function (name) {
-            that.uncheckedTagList.forEach(function (oriItem, index) {
-              if (oriItem.name === name) {
-                that.uncheckedTagList.splice(index, 1)
-              }
-            })
+          me.tagList.forEach(tag => tag.checked = false)
+          me.article = response.data;
+          (me.article.tags || []).forEach(item => {
+            let tag = me.tagList.find(tag => tag.name === item.name)
+            if (tag) {
+              tag.checked = true
+              tag.color = me.colorSet[Math.floor(Math.random() * 4)]
+            }
           })
         } else {
-          that.article = { category: {}, tags: [{ name: '' }] }
-          that.$Message.error('没有找到相关的文章')
+          me.article = { category: {}, tags: [{ name: '' }] }
+          me.$Message.error('没有找到相关的文章')
         }
       }).catch(function (error) {
         console.log(error)
@@ -218,22 +161,23 @@ export default {
     }
   },
   mounted () {
-    let that = this
+    let me = this
     axios({
       url: CommonConfig.adminURL + 'admin/list/tag',
       headers: {
-        Authorization: that.$store.getters.getAuthorizeKey
+        Authorization: me.$store.getters.getAuthorizeKey
       },
       method: 'post'
     }).then(function (response) {
       if (response.data) {
-        that.tagList = []
+        me.tagList = []
         response.data.forEach(function (item) {
           let index = Math.floor(Math.random() * 4)
-          that.uncheckedTagList.push({
-            color: that.colorSet[index],
+          me.tagList.push({
+            color: me.colorSet[index],
             name: item.name,
-            id: item.id
+            id: item.id,
+            checked: false
           })
         })
       }
@@ -283,6 +227,9 @@ export default {
   .article-tags{
     padding-left: 10px;
     margin-bottom: 20px;
+  }
+  .article-tag {
+    cursor: pointer;
   }
 
   .article-summary-admin{

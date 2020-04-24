@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import Cookies from 'js-cookie';
+import Cookies from 'js-cookie'
 
 export default {
   name: 'TopMenu',
@@ -43,16 +43,16 @@ export default {
     handleChange (name) {
       if (name) {
         if (name === 'defaultLogout') {
-          Cookies.remove('user');
-          this.$router.push('/login');
+          Cookies.remove('user')
+          this.$router.push('/login')
         }
         if (name !== 'defaultUser') {
           this.$router.push({
             name: name
-          });
+          })
         }
       }
-      // this.$emit('on-change', name);
+      // this.$emit('on-change', name)
     }
   }
 }

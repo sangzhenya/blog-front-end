@@ -42,8 +42,8 @@ export default {
     handleChange (name) {
       this.$router.push({
         name: name
-      });
-      // this.$emit('on-change', name);
+      })
+      // this.$emit('on-change', name)
     }
   }
 }

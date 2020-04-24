@@ -20,7 +20,7 @@
         <Tag @on-close="removeCategory" closable class="category" v-for="category in categoryList" v-bind:key="category.id" :name="category.name" :color="category.color">{{category.name}}</Tag>
       </div>
       <div class="category-input-part">
-        <Input class="category-input" placeholder="新分类" v-model="newCategory" @on-enter="addCategory"></Input>
+        <Input class="category-input" placeholder="新分类" v-model="newCategory" @on-enter="addCategory" />
       </div>
     </div>
     <div class="category-management">
@@ -29,7 +29,7 @@
         <Tag @on-close="removeTag" type="border" class="tag" closable  v-for="tag in tagList" v-bind:key="tag.id" :name="tag.name" :color="tag.color">{{tag.name}}</Tag>
       </div>
       <div class="category-input-part">
-        <Input class="category-input" placeholder="新标签" v-model="newTag" @on-enter="addTag"></Input>
+        <Input class="category-input" placeholder="新标签" v-model="newTag" @on-enter="addTag" />
       </div>
     </div>
   </div>
@@ -57,71 +57,71 @@ export default {
   store,
   methods: {
     confirmAddCategory () {
-      let that = this;
-      that.categoryList.push({
-        color: that.colorSet[Math.floor(Math.random() * 4)],
+      let me = this
+      me.categoryList.push({
+        color: me.colorSet[Math.floor(Math.random() * 4)],
         name: this.newCategory,
         id: this.categoryList.length + 1000
-      });
+      })
       axios({
         url: CommonConfig.adminURL + 'admin/save/category',
         headers: {
-          Authorization: that.$store.getters.getAuthorizeKey
+          Authorization: me.$store.getters.getAuthorizeKey
         },
         method: 'post',
         data: {
-          name: that.newCategory
+          name: me.newCategory
         }
       }).then(function (response) {
         if (response.data && response.data === 'Success') {
-          this.$Message.info('成功添加 分类：' + this.newCategory);
+          me.$Message.info('成功添加 分类：' + me.newCategory)
         }
       }).catch(function (error) {
         console.log(error)
-      });
+      })
     },
     confirmAddTag () {
-      let that = this;
-      that.tagList.push({
-        color: that.colorSet[Math.floor(Math.random() * 4)],
+      let me = this
+      me.tagList.push({
+        color: me.colorSet[Math.floor(Math.random() * 4)],
         name: this.newTag,
         id: this.tagList.length + 1000
-      });
+      })
       axios({
         url: CommonConfig.adminURL + 'admin/save/tag',
         headers: {
-          Authorization: that.$store.getters.getAuthorizeKey
+          Authorization: me.$store.getters.getAuthorizeKey
         },
         method: 'post',
         data: {
-          name: that.newTag
+          name: me.newTag
         }
       }).then(function (response) {
         if (response.data && response.data === 'Success') {
-          this.$Message.info('成功添加 标签：' + this.newTag);
+          me.$Message.info('成功添加 标签：' + me.newTag)
         }
       }).catch(function (error) {
         console.log(error)
-      });
+      })
     },
     cancel () {
-      this.$Message.info('已取消添加');
+      this.$Message.info('已取消添加')
     },
     addCategory () {
-      this.categoryModal = true;
+      this.categoryModal = true
     },
     addTag () {
-      this.tagModal = true;
+      this.tagModal = true
     },
     removeCategory (event, name) {
-      this.$Message.error('无法删除 分类：' + name);
+      this.$Message.error('无法删除 分类：' + name)
     },
     removeTag (event, name) {
-      this.$Message.error('无法删除 标签：' + name);
+      this.$Message.error('无法删除 标签：' + name)
     }
   },
   mounted () {
-    let that = this;
+    let that = this
     axios({
       url: CommonConfig.adminURL + 'admin/list/category',
       headers: {
@@ -130,9 +130,9 @@ export default {
       method: 'post'
     }).then(function (response) {
       if (response.data) {
-        that.categoryList = [];
+        that.categoryList = []
         response.data.forEach(function (item) {
-          let index = Math.floor(Math.random() * 4);
+          let index = Math.floor(Math.random() * 4)
           that.categoryList.push({
             color: that.colorSet[index],
             name: item.name,
@@ -142,7 +142,7 @@ export default {
       }
     }).catch(function (error) {
       console.log(error)
-    });
+    })
 
     axios({
       url: CommonConfig.adminURL + 'admin/list/tag',
@@ -152,9 +152,9 @@ export default {
       method: 'post'
     }).then(function (response) {
       if (response.data) {
-        that.tagList = [];
+        that.tagList = []
         response.data.forEach(function (item) {
-          let index = Math.floor(Math.random() * 4);
+          let index = Math.floor(Math.random() * 4)
           that.tagList.push({
             color: that.colorSet[index],
             name: item.name,
@@ -164,7 +164,7 @@ export default {
       }
     }).catch(function (error) {
       console.log(error)
-    });
+    })
   }
 }
 </script>

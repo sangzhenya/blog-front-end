@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import Cookies from 'js-cookie';
+import Cookies from 'js-cookie'
 
 export default {
   name: 'TopBar',
@@ -19,8 +19,8 @@ export default {
   },
   methods: {
     loginOut () {
-      Cookies.remove('user');
-      this.$router.push('/login');
+      Cookies.remove('user')
+      this.$router.push('/login')
     }
   }
 }
