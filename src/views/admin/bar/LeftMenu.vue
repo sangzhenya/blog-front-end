@@ -11,7 +11,11 @@
         <MenuGroup title="内容管理">
           <MenuItem name="articleManage">
             <Icon type="md-document" />
-            文章管理
+            文章修改
+          </MenuItem>
+          <MenuItem name="articleBatchManage">
+            <Icon type="md-paper" />
+            文章批量修改
           </MenuItem>
           <MenuItem name="categoryManage">
             <Icon type="md-pricetags" />

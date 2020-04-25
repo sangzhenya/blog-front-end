@@ -29,7 +29,7 @@
         <Input class="content-input" type="textarea" v-model="article.content" :autosize="{minRows: 20, maxRows: 20}" placeholder="写点什么东西吧" />
       </div>
       <div class="article-options">
-        <Button class="delete-button" @click="deleteArticle" type="error">删除</Button>
+        <Button class="delete-button" v-if="!article.deleteFlag" @click="deleteArticle" type="error">删除</Button>
         <Button @click="saveArticle">保存</Button>
       </div>
     </div>
@@ -132,7 +132,7 @@ export default {
         me.$router.push('/admin/login')
       }
       axios({
-        url: CommonConfig.adminURL + 'admin/search/article',
+        url: CommonConfig.adminURL + 'admin/article/search',
         headers: {
           Authorization: me.$store.getters.getAuthorizeKey
         },
@@ -142,7 +142,8 @@ export default {
         }
       }).then(function (response) {
         if (response.data) {
-          me.tagList.forEach(tag => tag.checked = false)
+          console.log(response.data)
+          me.tagList.forEach(tag => { tag.checked = false })
           me.article = response.data;
           (me.article.tags || []).forEach(item => {
             let tag = me.tagList.find(tag => tag.name === item.name)
@@ -158,7 +159,16 @@ export default {
       }).catch(function (error) {
         console.log(error)
       })
+    },
+    changePage () {
+      this.searchKeyword = this.$route.params.id
+      if (this.searchKeyword) {
+        this.searchArticle()
+      }
     }
+  },
+  watch: {
+    $route: 'changePage'
   },
   mounted () {
     let me = this
@@ -184,6 +194,7 @@ export default {
     }).catch(function (error) {
       console.log(error)
     })
+    this.changePage()
   }
 }
 </script>

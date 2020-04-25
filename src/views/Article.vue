@@ -66,18 +66,25 @@ export default {
   },
   methods: {
     changePage () {
-      if (this.$route.params.id) {
-        this.id = parseInt(this.$route.params.id)
+      let me = this
+      if (me.$route.params.id) {
+        me.id = parseInt(me.$route.params.id)
       }
-      let that = this
+      console.log(me.id)
       axios({
         url: CommonConfig.webDomain + 'public/article',
         method: 'post',
         data: {
-          'id': that.id
+          'id': me.id
         }
       }).then(function (response) {
-        that.article = response.data.data
+        console.log(response.data.data)
+        if (response.data.data) {
+          console.log(response.data.data)
+          me.article = response.data.data
+        } else {
+          me.$router.push('/error/404')
+        }
       }).catch(function (error) {
         console.log(error)
       })

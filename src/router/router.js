@@ -20,7 +20,7 @@ export const page404 = {
 }
 
 export const page403 = {
-  path: '/403',
+  path: '/error/403',
   name: 'error-403',
   meta: {
     title: '403 - 403'
@@ -29,7 +29,7 @@ export const page403 = {
 }
 
 export const page500 = {
-  path: '/500',
+  path: '/error/500',
   name: 'error-500',
   meta: {
     title: '500 - 500'
@@ -141,6 +141,19 @@ export const appRouter = [
         name: 'articleManage',
         title: 'Article Manage',
         component: () => import('@/views/admin/content/ArticleManagement')
+      },
+      {
+        path: 'management/article/:id(\\d+)',
+        title: 'Article Manage',
+        name: 'articleManage',
+        component: () => import('@/views/admin/content/ArticleManagement')
+      },
+      {
+        path: 'management/batch/article',
+        icon: 'compose',
+        name: 'articleBatchManage',
+        title: 'Article Batch Manage',
+        component: () => import('@/views/admin/content/ArticleBatchManagement')
       },
       {
         path: 'management/category',

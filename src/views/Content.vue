@@ -52,10 +52,10 @@ export default {
   },
   methods: {
     changePage () {
-      if (this.$route.params.page) {
-        this.page = parseInt(this.$route.params.page)
+      let me = this
+      if (me.$route.params.page) {
+        me.page = parseInt(me.$route.params.page)
       }
-      let that = this
       axios({
         url: CommonConfig.webDomain + 'public/page',
         headers: {
@@ -63,13 +63,14 @@ export default {
         },
         method: 'post',
         data: {
-          'page': that.page
+          'page': me.page
         }
-      }).then(function (response) {
-        that.data = response.data.data
-      }).catch(function (error) {
-        console.log(error)
-      })
+      }).then(response => {
+        me.data = response.data.data
+        if (!me.data || me.data.articles.length <= 0) {
+          me.$router.push('/error/404')
+        }
+      }).catch(error => console.log(error))
     }
   },
   filters: {

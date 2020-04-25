@@ -1,6 +1,6 @@
 const path = require('path')
 const CompressionWebpackPlugin = require('compression-webpack-plugin')
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const TerserPlugin = require('terser-webpack-plugin');
 const productionGzipExtensions = ['js', 'css']
 const isProduction = process.env.NODE_ENV === 'production'
 
@@ -12,13 +12,13 @@ const JS_CDN = [
     'https://cdn.bootcss.com/vue/2.6.10/vue.js',
     'https://cdn.bootcss.com/vuex/3.1.1/vuex.min.js',
     'https://cdn.bootcss.com/vue-router/3.0.7/vue-router.min.js',
-    'https://cdn.bootcss.com/iview/3.4.2-rc.1/iview.min.js',
+    'https://unpkg.com/view-design@4.2.0/dist/iview.min.js',
     'https://cdn.bootcss.com/axios/0.19.0-beta.1/axios.min.js',
     'https://cdn.bootcss.com/js-cookie/latest/js.cookie.min.js'
 ]
 
 const CSS_CDN = [
-    'https://cdn.bootcss.com/iview/3.4.2-rc.1/styles/iview.css'
+    'https://unpkg.com/view-design@4.2.0/dist/styles/iview.css'
 ]
 
 const cdn = {
@@ -63,18 +63,10 @@ module.exports = {
         minRatio: 0.8
       }))
       // 添加自定义代码压缩配置
-      config.plugins.push(
-        new UglifyJsPlugin({
-          uglifyOptions: {
-            compress: {
-              drop_debugger: true,
-              drop_console: true,
-            },
-          },
-          sourceMap: false,
-          parallel: true,
-        })
-      )
+      config.optimization = {
+        minimize: true,
+        minimizer: [new TerserPlugin()],
+      }
     }
   }
 }
