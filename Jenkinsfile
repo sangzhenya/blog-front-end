@@ -10,7 +10,7 @@ pipeline {
     stage('Remove old file') {
       steps {
         dir(path: '/var/www/html/blog') {
-          sh 'ls'
+          sh 'tree'
         }
 
       }
