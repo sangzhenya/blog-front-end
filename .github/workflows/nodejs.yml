@@ -25,12 +25,9 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
 
-    - name: Npm run bulid and install
-      run: |
-          npm install
-          npm run build
-      env:
-        CI: true
+    #- name: Npm run bulid and install
+    - run: npm install
+    - run: npm run build
     
     - name: ssh deploy
       uses: easingthemes/ssh-deploy@v2.1.2
