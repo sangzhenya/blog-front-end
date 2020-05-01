@@ -48,4 +48,4 @@ jobs:
         # Source directory
         SOURCE: "dist"
         # Target directory
-        # TARGET: # optional, default is /home/REMOTE_USER/
+        TARGET: /home/ubuntu/
