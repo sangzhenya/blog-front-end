@@ -2,7 +2,7 @@
   <div>
     <BlogHeader :pageType = '"category"' />
     <div class="category-content">
-      <Tag class="category" :color="colorSet[Math.floor(Math.random() * 4)]"
+      <Tag class="category"
            v-for="category in categories" v-bind:key="category.id" :name="category.name">
         <router-link :to="'/category/' + category.id">{{category.name}}</router-link>
       </Tag>

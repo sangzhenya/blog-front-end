@@ -10,10 +10,10 @@
           </router-link>
           <div class="article-attr">
             <Tag type="border">{{article.createDate | formatDate}}</Tag>
-            <Tag :color="colorSet[Math.floor(Math.random() * 4)]">
+            <Tag type="border" :color="colorSet[2]">
               <router-link :to="'/category/' + article.category.id">{{article.category.name}}</router-link>
             </Tag>
-            <Tag type="border" :color="colorSet[Math.floor(Math.random() * 4)]"
+            <Tag type="border"
                  v-for="tag in article.tags" v-bind:key="tag.id" :name="tag.name">{{ tag.name }}</Tag>
           </div>
         </div>

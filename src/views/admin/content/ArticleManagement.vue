@@ -92,6 +92,7 @@ export default {
       me.tagList.filter(tag => tag.checked).forEach(tag => {
         me.article.tags.push({ name: tag.name })
       })
+      console.log(me.article)
       axios({
         url: CommonConfig.adminURL + 'admin/save/article',
         headers: {
@@ -106,24 +107,24 @@ export default {
       }).catch(error => console.log(error))
     },
     searchCategory (value) {
-      let me = this
-      axios({
-        url: CommonConfig.adminURL + 'admin/search/category',
-        headers: {
-          Authorization: me.$store.getters.getAuthorizeKey
-        },
-        method: 'post',
-        data: {
-          searchKey: me.article.category.name
-        }
-      }).then(function (response) {
-        if (response.data) {
-          me.categoryValueList = (response.data || []).reduce((res, nex) => {
-            res.push(nex.name)
-            return res
-          }, [])
-        }
-      }).catch(error => console.log(error))
+      // let me = this
+      // axios({
+      //   url: CommonConfig.adminURL + 'admin/search/category',
+      //   headers: {
+      //     Authorization: me.$store.getters.getAuthorizeKey
+      //   },
+      //   method: 'post',
+      //   data: {
+      //     searchKey: me.article.category.name
+      //   }
+      // }).then(function (response) {
+      //   if (response.data) {
+      //     me.categoryValueList = (response.data || []).reduce((res, nex) => {
+      //       res.push(nex.name)
+      //       return res
+      //     }, [])
+      //   }
+      // }).catch(error => console.log(error))
     },
     searchArticle () {
       let me = this
@@ -189,6 +190,21 @@ export default {
             id: item.id,
             checked: false
           })
+        })
+      }
+    }).catch(function (error) {
+      console.log(error)
+    })
+    axios({
+      url: CommonConfig.adminURL + 'admin/list/category',
+      headers: {
+        Authorization: me.$store.getters.getAuthorizeKey
+      },
+      method: 'post'
+    }).then(function (response) {
+      if (response.data) {
+        response.data.forEach(function (item) {
+          me.categoryValueList.push(item.name)
         })
       }
     }).catch(function (error) {
