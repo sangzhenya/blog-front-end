@@ -38,7 +38,7 @@ jobs:
       uses: easingthemes/ssh-deploy@v2.1.2
       env: 
         # Private Key
-        SSH_PRIVATE_KEY: ${{ secrets.ACCESS_TOKEN }}
+        SSH_PRIVATE_KEY: ${{ secrets.DELOPY_KEY }}
         # Remote host
         REMOTE_HOST: "118.25.0.64"  
         # Remote user
@@ -46,6 +46,6 @@ jobs:
         # Remote port
         # REMOTE_PORT: # optional, default is 22
         # Source directory
-        SOURCE: "/dist"
+        SOURCE: "dist"
         # Target directory
-        TARGET: /home/ubuntu/
+        TARGET: /home/ubuntu
