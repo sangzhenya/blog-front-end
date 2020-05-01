@@ -25,7 +25,7 @@
           </li>
         </ul>
       </div>
-      <div style="margin-bottom: 30px;text-align: center;font-size: 12px;">备案号：<a href="http://www.beian.miit.gov.cn" style="text-decoration: underline">豫ICP备16007431号</a><span style="margin-left: 20px;">©Xinyue 2020-2021</span></div>
+      <div style="margin-bottom: 30px;text-align: center;font-size: 12px;">备案号：<a href="http://www.beian.miit.gov.cn" style="text-decoration: underline">豫ICP备16007431号</a><span style="margin-left: 20px;">©Xinyue 2020-2025</span></div>
     </div>
   </div>
 </template>
