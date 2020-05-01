@@ -29,7 +29,7 @@ jobs:
       uses: easingthemes/ssh-deploy@v2.1.2
       with:
         SSH_PRIVATE_KEY: ${{ secrets.ACCESS_TOKEN }}
-        REMOTE_HOST: 118.25.0.64
-        REMOTE_USER: ubuntu
-        SOURCE: dist
+        REMOTE_HOST: "118.25.0.64"  
+        REMOTE_USER: "ubuntu"
+        SOURCE: "dist"
         # TARGET: # optional, default is /home/REMOTE_USER/
