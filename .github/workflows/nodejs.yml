@@ -25,27 +25,13 @@ jobs:
     - run: npm run build --if-present
 
     - run: ls -al
-    #- name: ssh deploy
-     # uses: easingthemes/ssh-deploy@v2.1.2
-      #with: 
-       # SSH_PRIVATE_KEY: ${{ secrets.ACCESS_TOKEN }}
-        #REMOTE_HOST: "118.25.0.64"  
-        #REMOTE_USER: "ubuntu"
-        #SOURCE: "dist"
-        # TARGET: # optional, default is /home/REMOTE_USER/
+    - run: cp -rf dist blog
           
     - name: ssh deploy
       uses: easingthemes/ssh-deploy@v2.1.2
       env: 
-        # Private Key
         SSH_PRIVATE_KEY: ${{ secrets.KEY_3 }}
-        # Remote host
-        REMOTE_HOST: "118.25.0.64"  
-        # Remote user
-        REMOTE_USER: "ubuntu"
-        # Remote port
-        # REMOTE_PORT: # optional, default is 22
-        # Source directory
-        SOURCE: "dist"
-        # Target directory
-        TARGET: /home/ubuntu
+        REMOTE_HOST: "118.25.0.64"
+        REMOTE_USER: ubuntu
+        SOURCE: blog
+        TARGET: /var/www/html
