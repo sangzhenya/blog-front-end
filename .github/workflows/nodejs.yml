@@ -24,12 +24,14 @@ jobs:
     - run: npm ci
     - run: npm run build --if-present
 
-    
-    #- name: ssh deploy
-     # uses: easingthemes/ssh-deploy@v2.1.2
-      #with:
-       # SSH_PRIVATE_KEY: ${{ secrets.ACCESS_TOKEN }}
-        #REMOTE_HOST: 118.25.0.64
-        #REMOTE_USER: ubuntu
-        #SOURCE: dist
-        # TARGET: # optional, default is /home/REMOTE_USER/
+    - run: ls -al
+    - run: cp -rf dist blog
+          
+    - name: ssh deploy
+      uses: easingthemes/ssh-deploy@v2.1.2
+      env: 
+        SSH_PRIVATE_KEY: ${{ secrets.KEY_3 }}
+        REMOTE_HOST: "118.25.0.64"
+        REMOTE_USER: ubuntu
+        SOURCE: blog
+        TARGET: /var/www/html

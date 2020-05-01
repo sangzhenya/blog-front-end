@@ -4,8 +4,21 @@ pipeline {
     stage('Build') {
       steps {
         echo 'Start process'
-        sh '''ls
-pwd'''
+      }
+    }
+
+    stage('Remove old file') {
+      steps {
+        dir(path: '/var/www/html/blog') {
+          sh 'rm -rf *'
+        }
+
+      }
+    }
+
+    stage('End') {
+      steps {
+        echo 'End process'
       }
     }
 
