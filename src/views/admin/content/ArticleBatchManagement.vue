@@ -11,123 +11,13 @@
 import axios from 'axios'
 import CommonConfig from '@/config/common-config'
 // import store from '@/vuex/store'
-import DateUtils from '@/utils/date-utils'
+// import DateUtils from '@/utils/date-utils'
+import articleConfig from '@/utils/article-util'
 
 export default {
   data () {
     return {
-      colConfig: [
-        {
-          title: 'Id',
-          key: 'id',
-          width: 60
-        },
-        {
-          title: '标题',
-          key: 'title',
-          width: 260
-        },
-        {
-          title: '分类',
-          key: 'categoryName',
-          width: 100
-        },
-        {
-          title: '摘要',
-          key: 'summary'
-        },
-        {
-          title: '标签',
-          key: 'tagStr',
-          width: 200
-        },
-        {
-          title: '创建日期',
-          key: 'createDate',
-          width: 170,
-          render: (h, params) => {
-            return h('div', DateUtils.formatDate(this.articles[params.index].createDate))
-          }
-        },
-        {
-          title: '更新日期',
-          key: 'updateDate',
-          width: 170,
-          render: (h, params) => {
-            return h('div', DateUtils.formatDate(this.articles[params.index].updateDate))
-          }
-        },
-        {
-          title: '操作',
-          key: 'action',
-          width: 410,
-          render: (h, params) => {
-            let me = this
-            let btns = [h('Button', {
-              props: {
-                type: 'primary',
-                size: 'small'
-              },
-              style: {
-                marginRight: '5px',
-                cursor: 'pointer'
-              },
-              on: {
-                click: () => {
-                  window.open('/#/article/' + this.articles[params.index].id, '_blank')
-                }
-              }
-            }, 'View'),
-            h('Button', {
-              props: {
-                type: 'info',
-                size: 'small'
-              },
-              style: {
-                marginRight: '5px',
-                cursor: 'pointer'
-              },
-              on: {
-                click: () => {
-                  window.open('/#/admin/management/article/' + this.articles[params.index].id, '_blank')
-                }
-              }
-            }, 'Edit')]
-            if (me.articles[params.index].deleteFlag) {
-              btns.push(h('Button', {
-                props: {
-                  type: 'success',
-                  size: 'small'
-                },
-                style: {
-                  cursor: 'pointer'
-                },
-                on: {
-                  click: () => {
-                    this.enableArticle(params.index)
-                  }
-                }
-              }, 'Enable'))
-            } else {
-              btns.push(h('Button', {
-                props: {
-                  type: 'error',
-                  size: 'small'
-                },
-                style: {
-                  cursor: 'pointer'
-                },
-                on: {
-                  click: () => {
-                    this.disableArticle(params.index)
-                  }
-                }
-              }, 'Disable'))
-            }
-            return h('div', btns)
-          }
-        }
-      ],
+      colConfig: articleConfig,
       articles: [],
       page: 1,
       totalCount: 1,

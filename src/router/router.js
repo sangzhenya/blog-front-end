@@ -145,7 +145,7 @@ export const appRouter = [
       {
         path: 'management/article/:id(\\d+)',
         title: 'Article Manage',
-        name: 'articleManage',
+        name: 'articleManageById',
         component: () => import('@/views/admin/content/ArticleManagement')
       },
       {

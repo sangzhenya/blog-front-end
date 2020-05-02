@@ -4,6 +4,7 @@
       <div class="search-article">
         <Input class="search-input" placeholder="开始搜索" v-model="searchKeyword" @on-enter="searchArticle()" />
       </div>
+      <Table border :columns="colConfig" :data="articles" height="200"></Table>
     </div>
     <div class="article-management-main">
       <div class="article-title">
@@ -14,7 +15,6 @@
           class="category-input"
           v-model="article.category.name"
           :data="categoryValueList"
-          @on-search="searchCategory"
           placeholder="这里是分类">
         </AutoComplete>
       </div>
@@ -41,18 +41,22 @@ import axios from 'axios'
 import CommonConfig from '@/config/common-config'
 import Cookies from 'js-cookie'
 import store from '@/vuex/store'
+// import DateUtils from '@/utils/date-utils'
+import articleConfig from '@/utils/article-util'
 
 export default {
   name: 'ArticleManagement',
   data () {
     return {
+      colConfig: articleConfig,
       searchKeyword: '',
       msg: '',
       categoryValueList: [],
       colorSet: ['primary', 'error', 'success', 'warning'],
       tag: '',
       tagList: [],
-      article: { category: { name: '' }, tags: [{ name: '' }] }
+      article: { category: { name: '' }, tags: [{ name: '' }] },
+      articles: []
     }
   },
   store,
@@ -106,26 +110,6 @@ export default {
         }
       }).catch(error => console.log(error))
     },
-    searchCategory (value) {
-      // let me = this
-      // axios({
-      //   url: CommonConfig.adminURL + 'admin/search/category',
-      //   headers: {
-      //     Authorization: me.$store.getters.getAuthorizeKey
-      //   },
-      //   method: 'post',
-      //   data: {
-      //     searchKey: me.article.category.name
-      //   }
-      // }).then(function (response) {
-      //   if (response.data) {
-      //     me.categoryValueList = (response.data || []).reduce((res, nex) => {
-      //       res.push(nex.name)
-      //       return res
-      //     }, [])
-      //   }
-      // }).catch(error => console.log(error))
-    },
     searchArticle () {
       let me = this
       if (!me.$store.getters.getAuthorizeKey) {
@@ -142,17 +126,33 @@ export default {
           searchKey: me.searchKeyword
         }
       }).then(function (response) {
-        if (response.data) {
-          console.log(response.data)
-          me.tagList.forEach(tag => { tag.checked = false })
-          me.article = response.data;
-          (me.article.tags || []).forEach(item => {
-            let tag = me.tagList.find(tag => tag.name === item.name)
-            if (tag) {
-              tag.checked = true
-              tag.color = me.colorSet[Math.floor(Math.random() * 4)]
-            }
-          })
+        console.log(response)
+        if (response.data && response.data.length >= 1) {
+          if (response.data.length === 1) {
+            let articleData = response.data[0]
+            me.tagList.forEach(tag => { tag.checked = false })
+            me.article = articleData;
+            (me.article.tags || []).forEach(item => {
+              let tag = me.tagList.find(tag => tag.name === item.name)
+              if (tag) {
+                tag.checked = true
+                tag.color = me.colorSet[Math.floor(Math.random() * 4)]
+              }
+            })
+          } else {
+            me.articles = []
+            response.data.forEach(ac => {
+              ac.categoryName = ac.category.name
+              ac.tagStr = ''
+              if (ac.tags) {
+                ac.tags.forEach(tg => {
+                  ac.tagStr += tg.name + ' / '
+                })
+                ac.tagStr = ac.tagStr.substr(0, ac.tagStr.length - 3)
+              }
+              me.articles.push(ac)
+            })
+          }
         } else {
           me.article = { category: {}, tags: [{ name: '' }] }
           me.$Message.error('没有找到相关的文章')
@@ -226,6 +226,9 @@ export default {
     border: none;
     box-shadow: none;
     font-size: 14px;
+  }
+  .search-article {
+    margin-bottom: 10px;
   }
   .article-management-main{
     background-color: #fff;
